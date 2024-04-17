@@ -1,7 +1,7 @@
 import "./Header.css"
-import "../app/constants/routes"
+import "../../app/constants/routes"
 import Link from "next/link";
-import {HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE} from "../app/constants/routes";
+import {HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTER_ROUTE} from "../../app/constants/routes";
 
 const Header = () => {
     const isLogin: boolean = false;

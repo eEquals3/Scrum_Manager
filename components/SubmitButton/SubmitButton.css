@@ -1,0 +1,19 @@
+div {
+
+}
+
+div > button{
+    width: 55%;
+    height: 3rem;
+    border: solid blue;
+    border-radius: 1rem;
+    font-size: 2rem;
+    background: transparent;
+    z-index: 1;
+}
+
+div > button:hover {
+    color: white;
+}
+
+

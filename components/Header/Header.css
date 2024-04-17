@@ -1,7 +1,7 @@
 header {
     display: flex;
     height: 5rem;
-    background: rgba(0,0,0,0.30);
+    background: rgba(57, 141, 224, 0.6);
     padding: 0 2rem;
     color: white;
     font-size: 1.5rem;
@@ -19,7 +19,7 @@ header > nav > a {
 }
 
 header > nav > a:hover {
-    color: darkgray;
+    color: blue;
 }
 
 header > nav > ul {
@@ -35,5 +35,5 @@ header > nav > ul > a {
 }
 
 header > nav > ul > a:hover {
-    color: darkgray;
+    color: blue;
 }

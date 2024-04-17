@@ -1,0 +1,19 @@
+div {
+    display: flex;
+    width: 100%;
+    font-size: 2rem;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+div > label{
+}
+
+div > input{
+    width: 50%;
+    height: 2.5rem;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    box-shadow: 3px 2px 2px rgba(0, 0, 255, 0.45);
+    padding: 0 2%;
+}

@@ -3,17 +3,37 @@ div {
 }
 
 div > button{
-    width: 55%;
+    min-width: 20%;
+    width: max-content;
     height: 3rem;
-    border: solid blue;
+    border: none;
     border-radius: 1rem;
     font-size: 2rem;
     background: transparent;
     z-index: 1;
+    position: relative;
+    background: linear-gradient(to bottom right, #04afa9, #0a2594);
 }
 
 div > button:hover {
-    color: white;
+    color: blue;
 }
 
+div > button:before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    border-radius: 0.9rem;
+    background-color: white;
+    z-index: -1;
+}
 
+div > button:after {
+    content: attr(data);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: 200ms
+}

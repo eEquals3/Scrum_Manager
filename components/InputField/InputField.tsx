@@ -5,14 +5,21 @@ interface Props{
     type: string,
     name: string,
     placeholder: string,
+    register:any,
+    error: undefined | object
 }
 
-const InputField = ({label, type, name, placeholder}:Props) => {
+const InputField = ({label, type, name, placeholder, register, error}:Props) => {
   return(
+      <>
       <div>
           <label>{label}</label>
-          <input type={type} name={name} placeholder={placeholder} id={`field_${name}`}/>
+          <input {...register(name, {required: 'error message'})} type={type} name={name} placeholder={placeholder} id={`field_${name}`}/>
       </div>
+    {
+        error&& <var>{error?.message}</var>
+    }
+    </>
   )
 }
 

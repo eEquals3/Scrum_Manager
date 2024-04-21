@@ -37,3 +37,8 @@ header > nav > ul > a {
 header > nav > ul > a:hover {
     color: blue;
 }
+
+header > nav > ul > li > span:hover{
+    cursor: pointer;
+    color: blue;
+}

@@ -7,22 +7,40 @@ import {LOGIN_ROUTE} from "../constants/routes";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {registerSchema} from "../validationSchema/auth";
+import {createUserWithEmailAndPassword} from "@firebase/auth";
+import {auth} from "../services/Firebase";
+import {useRouter} from "next/navigation";
 
+interface UserLogin {
+    email: string,
+    password: string
+}
 
 const Register = () => {
 
-    const {handleSubmit, register, formState: {errors}} = useForm({
+    const {handleSubmit, register, formState: {errors}, reset} = useForm({
         resolver: yupResolver(registerSchema),
     })
 
-    const submitForm = (values: object) => {
-        console.log("form values", values);
+    const router = useRouter();
+
+    const onSubmit = (userData: UserLogin) => {
+        console.log(userData);
+        createUserWithEmailAndPassword(auth, userData.email, userData.password).then((response) => {
+            alert("Регистрация прошла успешно");
+            reset();
+            router.push(LOGIN_ROUTE);
+        }).catch((errors) => {
+            console.log("catch ", errors)
+            alert("что-то пошло не так, попробуйте снова");
+        });
     }
+
     return (
         <div>
             <div>
                 <span>Регистрация</span>
-                <form onSubmit={handleSubmit(submitForm)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <InputField register={register} error={errors.email} type="text" placeholder=" Введите email..."
                                 name="email" label="Email"/>
                     <InputField register={register} error={errors.password} type="password"

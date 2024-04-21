@@ -1,6 +1,8 @@
 import type {Metadata} from "next";
 import "./globals.css";
 import Header from "../components/Header/Header";
+import AuthProvider from "./provider/AuthProvider";
+import React from "react";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -15,8 +17,10 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className="Body">
-        <Header></Header>
-        {children}
+        <AuthProvider>
+            <Header/>
+            {children}
+        </AuthProvider>
         </body>
         </html>
     );

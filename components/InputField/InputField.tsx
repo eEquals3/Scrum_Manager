@@ -6,7 +6,7 @@ interface Props{
     name: string,
     placeholder: string,
     register:any,
-    error: undefined | object
+    error?: object
 }
 
 const InputField = ({label, type, name, placeholder, register, error}:Props) => {

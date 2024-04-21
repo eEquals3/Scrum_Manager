@@ -1,0 +1,74 @@
+[debug] [2024-04-18T17:04:19.595Z] ----------------------------------------------------------------------
+[debug] [2024-04-18T17:04:19.597Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Rage\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2024-04-18T17:04:19.598Z] CLI Version:   13.7.2
+[debug] [2024-04-18T17:04:19.598Z] Platform:      win32
+[debug] [2024-04-18T17:04:19.598Z] Node Version:  v20.10.0
+[debug] [2024-04-18T17:04:19.598Z] Time:          Thu Apr 18 2024 20:04:19 GMT+0300 (Москва, стандартное время)
+[debug] [2024-04-18T17:04:19.598Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-04-18T17:04:19.600Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-04-18T17:04:19.709Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-04-18T17:04:19.709Z] > authorizing via signed-in user (vkyctax@gmail.com)
+[debug] [2024-04-18T17:04:19.709Z] [iam] checking project scrum-manager-e0978 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-04-18T17:04:19.710Z] > refreshing access token with scopes: []
+[debug] [2024-04-18T17:04:19.711Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-04-18T17:04:19.711Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-04-18T17:04:19.871Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-04-18T17:04:19.871Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-04-18T17:04:19.877Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/scrum-manager-e0978:testIamPermissions [none]
+[debug] [2024-04-18T17:04:19.877Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/scrum-manager-e0978:testIamPermissions x-goog-quota-user=projects/scrum-manager-e0978
+[debug] [2024-04-18T17:04:19.877Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/scrum-manager-e0978:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-04-18T17:04:20.776Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/scrum-manager-e0978:testIamPermissions 200
+[debug] [2024-04-18T17:04:20.776Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/scrum-manager-e0978:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-04-18T17:04:20.777Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/scrum-manager-e0978 [none]
+[debug] [2024-04-18T17:04:20.989Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-04-18T17:04:20.989Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2024-04-18T17:04:21.143Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/scrum-manager-e0978 200
+[debug] [2024-04-18T17:04:21.143Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/scrum-manager-e0978 {"projectId":"scrum-manager-e0978","projectNumber":"116287469649","displayName":"Scrum-Manager","name":"projects/scrum-manager-e0978","resources":{"hostingSite":"scrum-manager-e0978"},"state":"ACTIVE","etag":"1_c0a89322-bdde-43ca-aac7-313afaa084ce"}
+[debug] [2024-04-18T17:04:24.146Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites pageToken=&pageSize=10
+[debug] [2024-04-18T17:04:25.304Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites 200
+[debug] [2024-04-18T17:04:25.304Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites {"sites":[{"name":"projects/scrum-manager-e0978/sites/scrum-manager-e0978","defaultUrl":"https://scrum-manager-e0978.web.app","appId":"1:116287469649:web:582bb4f590465ef21d6070","type":"DEFAULT_SITE"}]}
+[debug] [2024-04-18T17:04:25.305Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:116287469649:web:582bb4f590465ef21d6070/config [none]
+[debug] [2024-04-18T17:04:25.990Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:116287469649:web:582bb4f590465ef21d6070/config 200
+[debug] [2024-04-18T17:04:25.991Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:116287469649:web:582bb4f590465ef21d6070/config {"projectId":"scrum-manager-e0978","appId":"1:116287469649:web:582bb4f590465ef21d6070","storageBucket":"scrum-manager-e0978.appspot.com","apiKey":"AIzaSyA9gyR2Vzlx4Wbp0nLY7JnTGPwYk2rkxMQ","authDomain":"scrum-manager-e0978.firebaseapp.com","messagingSenderId":"116287469649"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 14.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2024-04-18T17:04:31.777Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites/scrum-manager-e0978 [none]
+[debug] [2024-04-18T17:04:32.797Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites/scrum-manager-e0978 200
+[debug] [2024-04-18T17:04:32.797Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/scrum-manager-e0978/sites/scrum-manager-e0978 {"name":"projects/scrum-manager-e0978/sites/scrum-manager-e0978","defaultUrl":"https://scrum-manager-e0978.web.app","appId":"1:116287469649:web:582bb4f590465ef21d6070","type":"DEFAULT_SITE"}
+[info]    ▲ Next.js 14.1.1
+
+[info] 
+
+[info]    Creating an optimized production build ...
+
+[info]  ✓ Compiled successfully
+
+[info]    Linting and checking validity of types ...
+
+[info] Failed to compile.
+
+
+[info] ./app/profile/page.tsx:13:22
+Type error: Type '{ type: string; placeholder: string; name: string; label: string; }' is missing the following properties from type 'Props': register, error
+
+  11 |                 <span>{`Добро пожаловать ${name}`}</span>
+  12 |                 <text>
+> 13 |                     <InputField type="text" placeholder=" Введите ваше имя..." name="user_name" label="Имя"/>
+     |                      ^
+  14 |                     <InputField type="text" placeholder=" Введите email..." name="email" label="Email"/>
+  15 |                     <InputField type="password" placeholder=" Введите пароль..." name="password" label="Пароль"/>
+  16 |                     <InputField type="password" placeholder=" Подтвердите пароль..." name="confirm_password" label="Подтвердите Пароль"/>
+
+[debug] [2024-04-18T17:04:42.944Z] Error: ENOENT: no such file or directory, open 'E:\VKR\.next\export-marker.json'
+[error] 
+[error] Error: An unexpected error has occurred.

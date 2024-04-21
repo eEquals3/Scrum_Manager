@@ -1,5 +1,5 @@
 "use client"
-import {createContext, ReactNode, useContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {auth} from "../services/Firebase";
 
 const Context = createContext({});
@@ -9,7 +9,7 @@ interface User {
     isLogin: boolean
 }
 
-const AuthProvider = ({children}: ReactNode) => {
+const AuthProvider = ({children}: any) => {
 
     const [user, setUser] = useState<User>({user: null, isLogin: false});
 

@@ -17,13 +17,13 @@ export const loginSchema = Yup.object({
 export const registerSchema = Yup.object({
     ...basicLoginField,
     confirm_password: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Пароль должен совпадать')
+        .oneOf([Yup.ref<string>('password')], 'Пароль должен совпадать')
 });
 
 export const profileSchema = Yup.object({
     ...basicLoginField,
     confirm_password: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Пароль должен совпадать'),
+        .oneOf([Yup.ref<string>('password')], 'Пароль должен совпадать'),
     user_name: Yup.string()
         .required("пожалуйста заполните это поле")
 });

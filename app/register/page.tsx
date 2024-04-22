@@ -30,6 +30,7 @@ const Register = () => {
             alert("Регистрация прошла успешно");
             reset();
             router.push(LOGIN_ROUTE);
+
         }).catch((errors) => {
             console.log("catch ", errors)
             alert("что-то пошло не так, попробуйте снова");

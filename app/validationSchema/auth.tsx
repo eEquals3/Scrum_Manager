@@ -21,9 +21,14 @@ export const registerSchema = Yup.object({
 });
 
 export const profileSchema = Yup.object({
-    ...basicLoginField,
-    confirm_password: Yup.string()
-        .oneOf([Yup.ref<string>('password')], 'Пароль должен совпадать'),
-    user_name: Yup.string()
+    user_name: Yup.string().nullable(),
+    icon_url: Yup.string().nullable(),
+})
+
+export const passwordSchema = Yup.object({
+    password: Yup.string()
         .required("пожалуйста заполните это поле")
-});
+        .min(6, "пожалуста введите пароль"),
+    confirm_password: Yup.string()
+        .oneOf([Yup.ref<string>('password')], 'Пароль должен совпадать')
+})

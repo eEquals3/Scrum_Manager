@@ -10,12 +10,13 @@ interface User {
 }
 
 const AuthProvider = ({children}: any) => {
-
+    const [loading, setLoading] = useState<boolean>(true);
     const [user, setUser] = useState<User>({user: null, isLogin: false});
 
     useEffect(()=>{
         return auth.onAuthStateChanged((userState) => {
             setUser({isLogin: !!userState, user: userState})
+            setLoading(false);
         });
     }, []);
 
@@ -23,7 +24,8 @@ const AuthProvider = ({children}: any) => {
 
     return (
         <Context.Provider value={{user, setUser}}>
-            {children}
+            {loading && <div className="h-screen flex w-full justify-center item-center"> Загрузка </div>}
+            {!loading && children}
         </Context.Provider>
     )
 }

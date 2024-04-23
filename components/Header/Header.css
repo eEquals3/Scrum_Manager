@@ -1,11 +1,21 @@
 header {
+    position: sticky;
     display: flex;
-    height: 5rem;
+    height: 5%;
     background: rgba(57, 141, 224, 0.6);
     padding: 0 2rem;
     color: white;
     font-size: 1.5rem;
 }
+
+/*header:after{
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    content: '';
+    position: absolute;
+}*/
+
 header > nav{
     display: flex;
     width: 100%;
@@ -13,20 +23,20 @@ header > nav{
     align-items: center;
 }
 
-header > nav > a {
+header > nav > li {
     color: white;
-    text-decoration: none;
+    list-style-type: none;
 }
 
-header > nav > a:hover {
+header > nav > li:hover {
     color: blue;
+    cursor: pointer;
 }
 
 header > nav > ul {
     list-style-type: none;
     display: flex;
     gap: 2rem;
-
 }
 
 header > nav > ul > a {
@@ -41,4 +51,12 @@ header > nav > ul > a:hover {
 header > nav > ul > li > span:hover{
     cursor: pointer;
     color: blue;
+}
+
+header > nav > ul > a > span{
+    position: relative;
+}
+
+header > nav > ul > li > span{
+    position: relative;
 }

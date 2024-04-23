@@ -10,7 +10,7 @@ import {loginSchema} from "../validationSchema/auth";
 import {auth} from "../services/Firebase.js"
 import {signInWithEmailAndPassword} from "@firebase/auth";
 import {useRouter} from "next/navigation";
-import {useCallback} from "react";
+import {memo, useCallback} from "react";
 
 interface UserLogin {
     email: string,
@@ -56,4 +56,4 @@ const Login = () => {
         </div>
     )
 }
-export default Login;
+export default memo(Login);

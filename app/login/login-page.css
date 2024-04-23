@@ -12,7 +12,7 @@ div > div{
     margin-top: 10rem;
     min-height: min-content;
     height: max-content;
-    width: fit-content;
+    width: min-content;
     max-width: 90%;
     min-width: 50%;
     border: solid transparent;

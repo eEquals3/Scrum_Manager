@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../components/Header/Header";
 import AuthProvider from "./provider/AuthProvider";
 import React from "react";
+import GlobalMenu from "../components/GlobalMenu/GlobalMenu";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -19,7 +20,10 @@ export default function RootLayout({
         <body className="Body">
         <AuthProvider>
             <Header/>
-            {children}
+            <span>
+                <GlobalMenu/>
+                {children}
+            </span>
         </AuthProvider>
         </body>
         </html>

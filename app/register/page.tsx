@@ -10,7 +10,7 @@ import {registerSchema} from "../validationSchema/auth";
 import {createUserWithEmailAndPassword} from "@firebase/auth";
 import {auth} from "../services/Firebase";
 import {useRouter} from "next/navigation";
-import {useCallback} from "react";
+import {memo, useCallback} from "react";
 
 interface UserLogin {
     email: string,
@@ -50,7 +50,7 @@ const Register = () => {
                     <InputField register={register} error={errors.confirm_password} type="password"
                                 placeholder=" Подтвердите пароль..." name="confirm_password"
                                 label="Подтвердите Пароль"/>
-                    <SubmitButton label="Зарегестрироваться"/>
+                    <SubmitButton label="Зарегистрироваться"/>
                     <>
                         <span>Уже есть аккаунт? </span>
                         <Link href={LOGIN_ROUTE}>
@@ -62,4 +62,4 @@ const Register = () => {
         </div>
     )
 }
-export default Register;
+export default memo(Register);

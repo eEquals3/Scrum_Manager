@@ -1,7 +1,10 @@
+import React from "react";
+
 export default function Home() {
+
     return (
         <div>
-            <text> Home Page </text>
+            <p> about </p>
         </div>
     )
 }

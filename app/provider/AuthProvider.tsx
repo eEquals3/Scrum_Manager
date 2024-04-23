@@ -1,6 +1,8 @@
 "use client"
 import {createContext, useContext, useEffect, useState} from "react";
 import {auth} from "../services/Firebase";
+import "./LoaderScreen.css"
+import "../../components/Loader/Loader.css"
 
 const Context = createContext({});
 
@@ -24,7 +26,7 @@ const AuthProvider = ({children}: any) => {
 
     return (
         <Context.Provider value={{user, setUser}}>
-            {loading ? (<div className="h-screen flex w-full justify-center item-center"> Загрузка </div>) : null}
+            {loading ? (<div className="LoaderScreen"><span className="Loader"/> </div>) : null}
             {!loading ? children : null}
         </Context.Provider>
     )

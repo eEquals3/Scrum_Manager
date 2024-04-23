@@ -9,3 +9,10 @@ Body{
     font-family: sans-serif;
     color: #363636;
 }
+
+Body > span {
+    display: flex;
+    flex-direction: row;
+    height: 95%;
+    width: 100%;
+}

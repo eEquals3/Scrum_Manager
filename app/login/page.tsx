@@ -10,6 +10,7 @@ import {loginSchema} from "../validationSchema/auth";
 import {auth} from "../services/Firebase.js"
 import {signInWithEmailAndPassword} from "@firebase/auth";
 import {useRouter} from "next/navigation";
+import {useCallback} from "react";
 
 interface UserLogin {
     email: string,
@@ -23,15 +24,15 @@ const Login = () => {
 
     const router = useRouter();
 
-    const onSubmit = (userData: UserLogin) => {
+    const onSubmit = useCallback((userData: UserLogin) => {
         console.log(userData);
-        signInWithEmailAndPassword(auth, userData.email, userData.password).then((response)=>{
+        signInWithEmailAndPassword(auth, userData.email, userData.password).then((response) => {
             reset();
             router.push(HOME_ROUTE);
-        }).catch((errors)=>{
-            alert ("что-то пошло не так")
+        }).catch((errors) => {
+            alert("что-то пошло не так")
         })
-    }
+    }, [reset, router])
 
     return (
         <div>

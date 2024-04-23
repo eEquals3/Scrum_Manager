@@ -10,6 +10,7 @@ import {registerSchema} from "../validationSchema/auth";
 import {createUserWithEmailAndPassword} from "@firebase/auth";
 import {auth} from "../services/Firebase";
 import {useRouter} from "next/navigation";
+import {useCallback} from "react";
 
 interface UserLogin {
     email: string,
@@ -24,7 +25,7 @@ const Register = () => {
 
     const router = useRouter();
 
-    const onSubmit = (userData: UserLogin) => {
+    const onSubmit = useCallback((userData: UserLogin) => {
         console.log(userData);
         createUserWithEmailAndPassword(auth, userData.email, userData.password).then((response) => {
             alert("Регистрация прошла успешно");
@@ -35,7 +36,7 @@ const Register = () => {
             console.log("catch ", errors)
             alert("что-то пошло не так, попробуйте снова");
         });
-    }
+    }, [reset, router])
 
     return (
         <div>

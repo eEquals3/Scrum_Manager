@@ -19,7 +19,7 @@ const Header = () => {
             console.log("error", e);
         })
 
-        router.push (HOME_ROUTE);
+        router.push(HOME_ROUTE);
     }
 
     return (
@@ -29,22 +29,24 @@ const Header = () => {
                     <div>logo</div>
                 </Link>
                 <ul>
-                    {!user?.isLogin &&
-                    <>
-                        <Link href={LOGIN_ROUTE}>
-                            <span>Войти</span>
-                        </Link>
-                    </>
+                    {!user?.isLogin ? (
+                        <>
+                            <Link href={LOGIN_ROUTE}>
+                                <span>Войти</span>
+                            </Link>
+                        </>
+                    ) : null
                     }
-                    {user?.isLogin &&
-                    <>
-                        <Link href={PROFILE_ROUTE}>
-                            <span>Профиль</span>
-                        </Link>
-                        <li onClick={logOut}>
-                            <span>Выйти</span>
-                        </li>
-                    </>
+                    {user?.isLogin ? (
+                        <>
+                            <Link href={PROFILE_ROUTE}>
+                                <span>Профиль</span>
+                            </Link>
+                            <li onClick={logOut}>
+                                <span>Выйти</span>
+                            </li>
+                        </>
+                    ) : null
                     }
                 </ul>
             </nav>

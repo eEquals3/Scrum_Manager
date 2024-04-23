@@ -38,11 +38,7 @@ const Profile = () => {
             setLoginChange("none") : setLoginChange("password")
     }, [loginChange])
 
-    const submitProfile = async (values: { user_name?: string | null, icon_url?: string | null }) => {
-        const a = await updateProfile(userInfo, {
-            displayName: values.user_name,
-            photoURL: values.icon_url
-        })
+    const onSubmitProfile = useCallback((values: { user_name?: string | null, icon_url?: string | null }) => {
         if (values) {
             updateProfile(userInfo, {
                 displayName: values.user_name,
@@ -54,9 +50,9 @@ const Profile = () => {
                 console.log("errors", e?.message)
             })
         }
-    }
+    }, [userInfo])
 
-    const submitPassword = useCallback((values: { password: string }) => {
+    const onSubmitPassword = useCallback((values: { password: string }) => {
         updatePassword(userInfo, values.password).then((r) => {
             console.log("password successfully changed", r);
             setLoginChange("none");
@@ -80,7 +76,7 @@ const Profile = () => {
 
                 {loginChange === "profile" ? (
                     <>
-                        <form onSubmit={handleProfileSubmit(submitProfile)}>
+                        <form onSubmit={handleProfileSubmit(onSubmitProfile)}>
                             <InputField register={registerProfile} error={profileErrors.user_name} type="text"
                                         placeholder=" Введите ваше имя..." name="user_name" label="Имя"/>
                             <InputField register={registerProfile} error={profileErrors.icon_url} type="text"
@@ -90,17 +86,17 @@ const Profile = () => {
                     </>
                 ) : null
                 }
-                {loginChange === "password" &&
-                <form onSubmit={handleNewPasswordSubmit(submitPassword)}>
-                    <InputField register={registerNewPassword} error={newPasswordErrors.password} type="password"
-                                placeholder=" Введите пароль..." name="password" label="Пароль"/>
-                    <InputField register={registerNewPassword} error={newPasswordErrors.confirm_password}
-                                type="password" placeholder=" Подтвердите пароль..." name="confirm_password"
-                                label="Подтвердите пароль"/>
-                    <SubmitButton label="Обновить пароль"/>
-                </form>
+                {loginChange === "password" ? (
+                    <form onSubmit={handleNewPasswordSubmit(onSubmitPassword)}>
+                        <InputField register={registerNewPassword} error={newPasswordErrors.password} type="password"
+                                    placeholder=" Введите пароль..." name="password" label="Пароль"/>
+                        <InputField register={registerNewPassword} error={newPasswordErrors.confirm_password}
+                                    type="password" placeholder=" Подтвердите пароль..." name="confirm_password"
+                                    label="Подтвердите пароль"/>
+                        <SubmitButton label="Обновить пароль"/>
+                    </form>
+                ) : null
                 }
-
             </div>
         </div>
     )

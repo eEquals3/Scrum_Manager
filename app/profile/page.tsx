@@ -39,6 +39,7 @@ const Profile = () => {
     }, [loginChange])
 
     const onSubmitProfile = useCallback((values: { user_name?: string | null, icon_url?: string | null }) => {
+        console.log('values', JSON.stringify(values, null, 2));
         if (values) {
             updateProfile(userInfo, {
                 displayName: values.user_name,
@@ -69,7 +70,7 @@ const Profile = () => {
                 <span>
                     <span>Имя: {userInfo?.displayName}</span>
                     <span>Email: {userInfo?.email}</span>
-                    <span>URL фото: {userInfo?.icon_url}</span>
+                    <span>URL фото: {userInfo?.photoURL}</span>
                     <button onClick={onPressChangeProfile}> редактировать профиль </button>
                     <button onClick={onPressChangePassword}> изменить пароль </button>
                 </span>

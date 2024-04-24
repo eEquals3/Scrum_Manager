@@ -1,3 +1,7 @@
+div > div {
+    width: min-content;
+}
+
 div > div > span{
     display: flex;
     flex-wrap: wrap;
@@ -9,8 +13,10 @@ div > div > span{
 
 div > div > span > span{
     width: 100%;
-    padding: 1rem 0 0 20%;
-
+    padding: 1rem 5% 0 10%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div > div > form > div{

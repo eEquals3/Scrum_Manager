@@ -8,6 +8,7 @@ import {signOut} from "@firebase/auth";
 import {auth} from "../../app/services/Firebase";
 import {useRouter} from "next/navigation";
 import {memo, useCallback} from "react";
+import Image from "next/image";
 
 const Header = () => {
     const {user}: any = AuthContext();
@@ -23,13 +24,13 @@ const Header = () => {
         router.push(ROOT_ROUTE);
     }, [router])
 
-    const onLogoClick = useCallback(()=>{
-        if (user?.isLogin){
+    const onLogoClick = useCallback(() => {
+        if (user?.isLogin) {
             router.push(HOME_ROUTE)
         } else {
             router.push(ROOT_ROUTE)
         }
-    },[router, user?.isLogin])
+    }, [router, user?.isLogin])
 
     return (
         <header>
@@ -48,6 +49,13 @@ const Header = () => {
                     }
                     {user?.isLogin ? (
                         <>
+                            {/*
+                                {user?.user.photoURL ? (
+                                    <>
+                                        <Image fill={true} src={user?.user.photoURL} alt="Profile Icon"/>
+                                    </>
+                                ) : null}
+                            */}
                             <Link href={PROFILE_ROUTE}>
                                 <span>Профиль</span>
                             </Link>

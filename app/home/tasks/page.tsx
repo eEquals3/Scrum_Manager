@@ -1,9 +1,17 @@
 import React, {memo} from "react";
+import "./tasks.css"
 
 const Tasks = () => {
     return (
         <div>
-            <p> Home Page </p>
+            <div>
+                <h1> Задачи </h1>
+                <span>
+                    <span>
+
+                    </span>
+                </span>
+            </div>
         </div>
     )
 }

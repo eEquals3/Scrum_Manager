@@ -7,11 +7,11 @@ interface Props{
 
 const SubmitButton = ({label, onClickFunk}:Props) => {
     return (
-        <div>
+        <a>
             <button onClick={onClickFunk}>
                 {label}
             </button>
-        </div>
+        </a>
     )
 }
 

@@ -1,4 +1,4 @@
-div > button{
+a > button{
     min-width: 54%;
     max-width: 100%;
     width: max-content;
@@ -12,11 +12,11 @@ div > button{
     background: linear-gradient(to bottom right, #04afa9, #0a2594);
 }
 
-div > button:hover {
+a > button:hover {
     color: blue;
 }
 
-div > button:before {
+a > button:before {
     content: "";
     position: absolute;
     left: 2px;
@@ -28,7 +28,7 @@ div > button:before {
     z-index: -1;
 }
 
-div > button:after {
+a > button:after {
     content: attr(data);
     -webkit-background-clip: text;
     color: transparent;

@@ -4,7 +4,12 @@ import "./commands.css"
 const Commands = () => {
     return (
         <div>
-            <p> Commands </p>
+            <div>
+                <h1> Команды </h1>
+                <span>
+
+                </span>
+            </div>
         </div>
     )
 }

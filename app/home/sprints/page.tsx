@@ -4,7 +4,12 @@ import "./sprints.css"
 const Sprints = () => {
     return (
         <div>
-            <p> Sprints </p>
+            <div>
+                <h1> Спринты </h1>
+                <span>
+
+                </span>
+            </div>
         </div>
     )
 }

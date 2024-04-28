@@ -8,4 +8,5 @@ Body{
     background: linear-gradient(to bottom right, #86869d, #98b0b0);
     font-family: sans-serif;
     color: #363636;
+    padding: 0;
 }

@@ -39,7 +39,6 @@ const Profile = () => {
     }, [loginChange])
 
     const onSubmitProfile = useCallback((values: { user_name?: string | null, icon_url?: string | null }) => {
-        console.log('values', JSON.stringify(values, null, 2));
         if (values) {
             updateProfile(userInfo, {
                 displayName: values.user_name,

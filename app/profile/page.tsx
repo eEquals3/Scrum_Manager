@@ -9,6 +9,9 @@ import {passwordSchema, profileSchema} from "../validationSchema/auth";
 import {memo, useCallback, useState} from "react";
 import {AuthContext} from "../provider/AuthProvider";
 import {updatePassword, updateProfile} from "@firebase/auth";
+import {doc, updateDoc} from "@firebase/firestore";
+import {db} from "../services/Firebase";
+import {DocumentData} from "firebase/firestore";
 
 const Profile = () => {
     const {user}: any = AuthContext();
@@ -43,10 +46,20 @@ const Profile = () => {
             updateProfile(userInfo, {
                 displayName: values.user_name,
                 photoURL: values.icon_url
-            }).then((r) => {
+            }).then(async (r) => {
+                try {
+                    await updateDoc(doc(db, "users", userInfo.uid), {
+                        name: values.user_name,
+                        iconURL: values.icon_url
+                    } as DocumentData)
+                } catch (errors) {
+                    console.log('errors', JSON.stringify(errors, null, 2));
+                    console.log('userInfo.uid', JSON.stringify(userInfo.uid, null, 2));
+                }
                 console.log("profile successfully changed", r);
                 setLoginChange("none");
             }).catch((e) => {
+                alert("что-то пошло не так")
                 console.log("errors", e?.message)
             })
         }

@@ -7,10 +7,11 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {loginSchema} from "../validationSchema/auth";
-import {auth} from "../services/Firebase.js"
+import {auth, db} from "../services/Firebase.js"
 import {signInWithEmailAndPassword} from "@firebase/auth";
 import {useRouter} from "next/navigation";
 import {memo, useCallback} from "react";
+import {doc, DocumentData, setDoc} from "firebase/firestore";
 
 interface UserLogin {
     email: string,
@@ -25,12 +26,24 @@ const Login = () => {
     const router = useRouter();
 
     const onSubmit = useCallback((userData: UserLogin) => {
-        console.log(userData);
-        signInWithEmailAndPassword(auth, userData.email, userData.password).then((response) => {
+        signInWithEmailAndPassword(auth, userData.email, userData.password).then(async (response) => {
+            const userid = response.user.uid;
+            setTimeout(() => {
+                router.push(HOME_ROUTE);
+            }, 1000);
             reset();
-            router.push(HOME_ROUTE);
+            try {
+                await setDoc(doc(db, "users", userid), {
+                    email: userData.email,
+                    name: "",
+                    iconURL: ""
+                } as DocumentData);
+            } catch (errors){
+                console.log('errors adding document', JSON.stringify(errors, null, 2));
+            }
         }).catch((errors) => {
             alert("что-то пошло не так")
+            console.log('errors', JSON.stringify(errors, null, 2));
         })
     }, [reset, router])
 

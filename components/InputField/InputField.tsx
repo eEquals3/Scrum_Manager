@@ -2,7 +2,7 @@ import "./InputField.css"
 
 interface Props{
     label:string,
-    type: string,
+    type?: string,
     name: string,
     placeholder: string,
     register:any,
@@ -10,7 +10,7 @@ interface Props{
     defaultValue?:string
 }
 
-const InputField = ({label, type, name, placeholder, register, error, defaultValue}:Props) => {
+export const InputField = ({label, type, name, placeholder, register, error, defaultValue}:Props) => {
   return(
       <>
       <b>
@@ -22,6 +22,20 @@ const InputField = ({label, type, name, placeholder, register, error, defaultVal
     }
     </>
   )
+}
+
+export const InputArea = ({label, name, placeholder, register, error, defaultValue}:Props) => {
+    return(
+        <>
+            <b>
+                <label>{label}</label>
+                <textarea {...register(name, {required: 'error message'})} name={name} placeholder={placeholder} id={`field_${name}`} defaultValue={defaultValue}/>
+            </b>
+            {
+                error&& <var>{error?.message}</var>
+            }
+        </>
+    )
 }
 
 export default InputField;

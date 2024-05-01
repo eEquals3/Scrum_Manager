@@ -89,10 +89,13 @@ div > div > span > div > h1{
 
 div > div > span > div > div{
     display: flex;
+    flex-wrap: wrap;
     font-size: 1.5rem;
+    max-width: 100%;
     width: calc(100% - 4rem);
     min-height: max-content;
     padding: 0 2rem;
+    word-break: break-all;
 }
 
 div > div > span > div > p{
@@ -128,6 +131,10 @@ div > div > span > div > form > a{
     bottom: 0;
     display: flex;
     justify-content: center;
+}
+
+div > div > span > div > form > div > b{
+    height: 50vh;
 }
 
 div > div > span > div > a{

@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {taskSchema} from "../../validationSchema/taskSchema";
 import SubmitButton from "../../../components/SubmitButton/SubmitButton";
-import InputField from "../../../components/InputField/InputField";
+import {InputField, InputArea} from "../../../components/InputField/InputField";
 import {collection, deleteDoc, doc, DocumentData, onSnapshot, setDoc} from "firebase/firestore";
 import {db} from "../../services/Firebase";
 import {AuthContext} from "../../provider/AuthProvider";
@@ -19,19 +19,32 @@ const Tasks = () => {
     const {user}: any = AuthContext();
     const userInfo = user.user;
 
-    const {handleSubmit, register, formState: {errors}, getValues} = useForm({
+    const {handleSubmit, register, formState: {errors}, getValues, resetField} = useForm({
         resolver: yupResolver(taskSchema)
     })
 
     const [tasks, setTasks] = useState<DocumentData[]>([])
 
-    useEffect(()=>{
-        const unsubscribe = onSnapshot(collection(db, "users", userInfo.uid, "tasks"), (snapshot => {
+    useEffect(() => {
+        const unsubscribe = onSnapshot(collection(db, "users", userInfo?.uid, "tasks"), (snapshot => {
             const updatedTasks = snapshot.docs.map((doc) => doc.data())
             setTasks(updatedTasks);
         }))
-        return ()=> unsubscribe();
-    }, [userInfo.uid])
+        return () => unsubscribe();
+    }, [userInfo?.uid])
+
+    useEffect(() => {
+        if (currentTask?.name != "") {
+            setTaskState("display")
+        }
+    }, [currentTaskID])
+
+    /*useEffect(()=>{
+        console.log('taskState', JSON.stringify(taskState, null, 2));
+        console.log('currentTaskID', JSON.stringify(currentTaskID, null, 2));
+        console.log('currentTask', JSON.stringify(currentTask, null, 2));
+    }, [currentTaskID, taskState])
+     */
 
     /*
     useEffect(() => {
@@ -55,47 +68,49 @@ const Tasks = () => {
     const onAddTaskClick = useCallback(async () => {
         const taskid = crypto.randomUUID()
         try {
-            await setDoc(doc(db, "users", userInfo.uid, "tasks", taskid), {
+            await setDoc(doc(db, "users", userInfo?.uid, "tasks", taskid), {
                 id: taskid,
                 name: "",
                 description: ""
             } as DocumentData)
             setCurrentTaskID(taskid)
+            setTaskState("redact")
         } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
     }, [userInfo?.uid])
 
     const onRedactClick = useCallback(() => {
+        resetField("name")
+        resetField("description")
         setTaskState("redact")
     }, [])
 
     const onSaveClick = useCallback(async () => {
         try {
             const values = getValues()
-            await updateDoc(doc(db, "users", userInfo.uid, "tasks", currentTaskID), {
+            console.log('values', JSON.stringify(values, null, 2));
+            await updateDoc(doc(db, "users", userInfo?.uid, "tasks", currentTaskID), {
                 name: values["name"],
                 description: values["description"],
             } as DocumentData)
-        }
-        catch (errors){
+            setTaskState("display")
+        } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
         setTaskState("display")
-    }, [currentTaskID, getValues, userInfo.uid])
+    }, [currentTaskID, getValues, userInfo?.uid])
 
     const onDeleteClick = useCallback(async () => {
         try {
-            await deleteDoc(doc(db, "users", userInfo.uid, "tasks", currentTaskID))
+            await deleteDoc(doc(db, "users", userInfo?.uid, "tasks", currentTaskID))
             setCurrentTaskID("")
-        }
-        catch (errors){
+        } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
-    }, [currentTaskID, userInfo.uid])
+    }, [currentTaskID, userInfo?.uid])
 
-    const getTask = useMemo(() => {
-        setTaskState("display")
+    const currentTask = useMemo(() => {
         return (tasks.find((task) => (
             task.id === currentTaskID)))
     }, [currentTaskID, tasks])
@@ -112,29 +127,29 @@ const Tasks = () => {
                         </span>
                     </span>
                     <div>
-                        {taskState === "display" && currentTaskID != ""? (
+                        {taskState === "display" && currentTaskID != "" ? (
                             <>
                                 <h1>
-                                    {getTask?.name}
+                                    {currentTask?.name}
                                 </h1>
-                                <div>{getTask?.description}</div>
+                                <div>{currentTask?.description}</div>
                                 <p>
-                                    <SubmitButton onClickFunk={onDeleteClick} label={"удалить"} />
+                                    <SubmitButton onClickFunk={onDeleteClick} label={"удалить"}/>
                                     <SubmitButton onClickFunk={onRedactClick} label="редактировать"/>
                                 </p>
                             </>
                         ) : null}
-                        {taskState === "redact" && currentTaskID != ""? (
+                        {taskState === "redact" && currentTaskID != "" ? (
                             <form onSubmit={handleSubmit(onSaveClick)}>
                                 <h1>
                                     Имя задачи
                                     <InputField register={register} name="name" label="" type="text"
-                                                placeholder={""} error={errors.name} defaultValue={getTask?.name}/>
+                                                placeholder={""} error={errors.name} defaultValue={currentTask?.name}/>
                                 </h1>
                                 <div>
                                     Описание задачи
-                                    <InputField register={register} name="description" label="" type="text"
-                                                placeholder={""} defaultValue={getTask?.description}/>
+                                    <InputArea register={register} name="description" label=""
+                                                placeholder={""} defaultValue={currentTask?.description}/>
                                 </div>
                                 <SubmitButton label="Сохранить"/>
                             </form>

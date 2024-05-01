@@ -41,11 +41,6 @@ const Register = () => {
                     name: "",
                     iconURL: ""
                 } as DocumentData);
-                await setDoc(doc(db, "users", userid, "tasks", taskid),{
-                    id: taskid,
-                    name: "самая первая задача",
-                    description: "шаблон задачи"
-                } as DocumentData)
             } catch (errors) {
                 console.log('errors adding document', JSON.stringify(errors, null, 2));
             }

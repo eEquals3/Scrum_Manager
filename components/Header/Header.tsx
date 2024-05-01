@@ -15,8 +15,8 @@ const Header = () => {
     const router = useRouter();
 
     const logOut = useCallback(() => {
+        router.push(ROOT_ROUTE)
         signOut(auth).then((response) => {
-            router.push(ROOT_ROUTE)
             console.log("response", response);
         }).catch((e) => {
             console.log("error", e);

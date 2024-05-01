@@ -3,14 +3,15 @@ import "../login/login-page.css";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Link from "next/link";
-import {LOGIN_ROUTE} from "../constants/routes";
+import {HOME_ROUTE, LOGIN_ROUTE} from "../constants/routes";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {registerSchema} from "../validationSchema/auth";
 import {createUserWithEmailAndPassword} from "@firebase/auth";
-import {auth} from "../services/Firebase";
+import {auth, db} from "../services/Firebase";
 import {useRouter} from "next/navigation";
 import {memo, useCallback} from "react";
+import {collection, doc, DocumentData, setDoc} from "firebase/firestore";
 
 interface UserLogin {
     email: string,
@@ -26,11 +27,28 @@ const Register = () => {
     const router = useRouter();
 
     const onSubmit = useCallback((userData: UserLogin) => {
-        console.log(userData);
-        createUserWithEmailAndPassword(auth, userData.email, userData.password).then((response) => {
+        createUserWithEmailAndPassword(auth, userData.email, userData.password).then(async (response) => {
             alert("Регистрация прошла успешно");
+            const userid = response.user.uid;
+            const taskid = crypto.randomUUID()
+            setTimeout(() => {
+                router.push(LOGIN_ROUTE);
+            }, 1000);
             reset();
-            router.push(LOGIN_ROUTE);
+            try {
+                await setDoc(doc(db, "users", userid), {
+                    email: userData.email,
+                    name: "",
+                    iconURL: ""
+                } as DocumentData);
+                await setDoc(doc(db, "users", userid, "tasks", taskid),{
+                    id: taskid,
+                    name: "самая первая задача",
+                    description: "шаблон задачи"
+                } as DocumentData)
+            } catch (errors) {
+                console.log('errors adding document', JSON.stringify(errors, null, 2));
+            }
 
         }).catch((errors) => {
             console.log("catch ", errors)

@@ -16,12 +16,11 @@ const Header = () => {
 
     const logOut = useCallback(() => {
         signOut(auth).then((response) => {
+            router.push(ROOT_ROUTE)
             console.log("response", response);
         }).catch((e) => {
             console.log("error", e);
         })
-
-        router.push(ROOT_ROUTE);
     }, [router])
 
     const onLogoClick = useCallback(() => {

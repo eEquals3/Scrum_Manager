@@ -2,7 +2,7 @@ import "./SubmitButton.css"
 
 interface Props{
     label: string;
-    onClickFunk?: () => {};
+    onClickFunk?: () => void | any;
 }
 
 const SubmitButton = ({label, onClickFunk}:Props) => {

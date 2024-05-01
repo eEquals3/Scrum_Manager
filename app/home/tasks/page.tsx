@@ -1,5 +1,5 @@
 "use client"
-import React, {memo, useCallback, useMemo, useState} from "react";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 import "./tasks.css"
 import TaskButton from "../../../components/TaskButton/TaskButton";
 import {useForm} from "react-hook-form";
@@ -7,55 +7,98 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {taskSchema} from "../../validationSchema/taskSchema";
 import SubmitButton from "../../../components/SubmitButton/SubmitButton";
 import InputField from "../../../components/InputField/InputField";
-
-interface Task {
-    id: string
-    name: string,
-    description: string,
-}
+import {collection, deleteDoc, doc, DocumentData, onSnapshot, setDoc} from "firebase/firestore";
+import {db} from "../../services/Firebase";
+import {AuthContext} from "../../provider/AuthProvider";
+import {updateDoc} from "@firebase/firestore";
 
 const Tasks = () => {
     const [currentTaskID, setCurrentTaskID] = useState("")
     const [taskState, setTaskState] = useState("display")
 
-    const {handleSubmit, register, formState: {errors: Error}} = useForm({
+    const {user}: any = AuthContext();
+    const userInfo = user.user;
+
+    const {handleSubmit, register, formState: {errors}, getValues} = useForm({
         resolver: yupResolver(taskSchema)
     })
 
-    const [testTasks, setTestTask] = useState([{
-        id: crypto.randomUUID(),
-        name: "1",
-        description: "sdfhskdfhsjdhfjs hfhdfhdfhsdfhdjfsdhfhesuhfd jsfhdjfhsjdhfjsdhfjkhsdf jhdjhfjsdhfjhdfkjs hfjdhfjhsjdhfjshdfjkshfk jhskjdhfjkhdjshf kjdhskjfhdjhfs asdasdasdasdadawdasdads"
-    }, {
-        id: crypto.randomUUID(),
-        name: "2",
-        description: "234"
-    }])
+    const [tasks, setTasks] = useState<DocumentData[]>([])
 
-    const createTask = useCallback((task: Task) => {
-        return <TaskButton taskName={task.name} taskId={task.id} taskDescription={task.description}
+    useEffect(()=>{
+        const unsubscribe = onSnapshot(collection(db, "users", userInfo.uid, "tasks"), (snapshot => {
+            const updatedTasks = snapshot.docs.map((doc) => doc.data())
+            setTasks(updatedTasks);
+        }))
+        return ()=> unsubscribe();
+    }, [userInfo.uid])
+
+    /*
+    useEffect(() => {
+        let taskMassive = []
+        const Receive = async () => {
+            const snapshot = await getDocs(collection(db, "users", userInfo.uid, "tasks"));
+            snapshot.forEach((doc) => {
+                taskMassive.push(doc.data())
+            })
+            setTasks(taskMassive);
+        }
+        Receive().catch((errors)=>{console.log('errors', JSON.stringify(errors, null, 2));})
+    }, [userInfo.uid])
+     */
+
+    const createTask = useCallback((task: DocumentData) => {
+        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} taskDescription={task.description}
                            onTaskClickFunc={setCurrentTaskID}/>
     }, [])
 
-    const onAddTaskClick = useCallback(() => {
-        return (
-            setTestTask([...testTasks, {id: crypto.randomUUID(), name: "", description: ""}])
-        )
-    }, [testTasks])
+    const onAddTaskClick = useCallback(async () => {
+        const taskid = crypto.randomUUID()
+        try {
+            await setDoc(doc(db, "users", userInfo.uid, "tasks", taskid), {
+                id: taskid,
+                name: "",
+                description: ""
+            } as DocumentData)
+            setCurrentTaskID(taskid)
+        } catch (errors) {
+            console.log('errors', JSON.stringify(errors, null, 2));
+        }
+    }, [userInfo?.uid])
 
     const onRedactClick = useCallback(() => {
         setTaskState("redact")
     }, [])
 
-    const onSaveClick = useCallback(() => {
+    const onSaveClick = useCallback(async () => {
+        try {
+            const values = getValues()
+            await updateDoc(doc(db, "users", userInfo.uid, "tasks", currentTaskID), {
+                name: values["name"],
+                description: values["description"],
+            } as DocumentData)
+        }
+        catch (errors){
+            console.log('errors', JSON.stringify(errors, null, 2));
+        }
         setTaskState("display")
-    }, [])
+    }, [currentTaskID, getValues, userInfo.uid])
+
+    const onDeleteClick = useCallback(async () => {
+        try {
+            await deleteDoc(doc(db, "users", userInfo.uid, "tasks", currentTaskID))
+            setCurrentTaskID("")
+        }
+        catch (errors){
+            console.log('errors', JSON.stringify(errors, null, 2));
+        }
+    }, [currentTaskID, userInfo.uid])
 
     const getTask = useMemo(() => {
         setTaskState("display")
-        return (testTasks.find((task: Task) => (
+        return (tasks.find((task) => (
             task.id === currentTaskID)))
-    }, [currentTaskID, testTasks])
+    }, [currentTaskID, tasks])
 
     return (
         <div>
@@ -64,29 +107,34 @@ const Tasks = () => {
                 <span>
                     <span>
                         <span>
-                            {testTasks.map(createTask)}
+                            {tasks.map(createTask)}
                             <button className="TaskButton" onClick={onAddTaskClick}> + </button>
                         </span>
                     </span>
                     <div>
-                        {taskState === "display" ? (
+                        {taskState === "display" && currentTaskID != ""? (
                             <>
                                 <h1>
                                     {getTask?.name}
                                 </h1>
                                 <div>{getTask?.description}</div>
-                                <SubmitButton onClickFunk={onRedactClick} label="Редактировать"/>
+                                <p>
+                                    <SubmitButton onClickFunk={onDeleteClick} label={"удалить"} />
+                                    <SubmitButton onClickFunk={onRedactClick} label="редактировать"/>
+                                </p>
                             </>
                         ) : null}
-                        {taskState === "redact" ? (
+                        {taskState === "redact" && currentTaskID != ""? (
                             <form onSubmit={handleSubmit(onSaveClick)}>
                                 <h1>
                                     Имя задачи
-                                    <InputField register={register} name="name" label="" type="text" placeholder={getTask?.name}/>
+                                    <InputField register={register} name="name" label="" type="text"
+                                                placeholder={""} error={errors.name} defaultValue={getTask?.name}/>
                                 </h1>
                                 <div>
                                     Описание задачи
-                                    <InputField register={register} name="description" label="" type="text" placeholder={getTask?.description}/>
+                                    <InputField register={register} name="description" label="" type="text"
+                                                placeholder={""} defaultValue={getTask?.description}/>
                                 </div>
                                 <SubmitButton label="Сохранить"/>
                             </form>

@@ -33,7 +33,7 @@ const Register = () => {
             const taskid = crypto.randomUUID()
             setTimeout(() => {
                 router.push(LOGIN_ROUTE);
-            }, 1000);
+            }, 100);
             reset();
             try {
                 await setDoc(doc(db, "users", userid), {
@@ -44,7 +44,6 @@ const Register = () => {
             } catch (errors) {
                 console.log('errors adding document', JSON.stringify(errors, null, 2));
             }
-
         }).catch((errors) => {
             console.log("catch ", errors)
             alert("что-то пошло не так, попробуйте снова");

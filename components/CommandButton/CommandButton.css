@@ -1,0 +1,11 @@
+.CommandButton{
+    min-height: 2rem;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0;
+    width: 100%;
+    border: 2px solid rgba(57, 141, 224, 1);
+}
+
+.CommandButton:hover{
+    color: blue
+}

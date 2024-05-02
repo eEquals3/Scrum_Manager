@@ -8,7 +8,6 @@ import {signOut} from "@firebase/auth";
 import {auth} from "../../app/services/Firebase";
 import {useRouter} from "next/navigation";
 import {memo, useCallback} from "react";
-import Image from "next/image";
 
 const Header = () => {
     const {user}: any = AuthContext();
@@ -16,11 +15,13 @@ const Header = () => {
 
     const logOut = useCallback(() => {
         router.push(ROOT_ROUTE)
-        signOut(auth).then((response) => {
-            console.log("response", response);
-        }).catch((e) => {
-            console.log("error", e);
-        })
+        setTimeout(() => {
+            signOut(auth).then((response) => {
+                console.log("response", response);
+            }).catch((e) => {
+                console.log("error", e);
+            })
+        }, 100);
     }, [router])
 
     const onLogoClick = useCallback(() => {

@@ -4,7 +4,6 @@ import {memo, useCallback} from "react";
 interface Props {
     taskId: string
     taskName: string,
-    taskDescription: string,
     onTaskClickFunc: (taskId: string) => void
 }
 

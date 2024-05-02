@@ -13,8 +13,8 @@ import {AuthContext} from "../../provider/AuthProvider";
 import {updateDoc} from "@firebase/firestore";
 
 const Tasks = () => {
-    const [currentTaskID, setCurrentTaskID] = useState("")
-    const [taskState, setTaskState] = useState("display")
+    const [currentTaskID, setCurrentTaskID] = useState<string>("")
+    const [taskState, setTaskState] = useState<string>("display")
 
     const {user}: any = AuthContext();
     const userInfo = user.user;
@@ -61,8 +61,7 @@ const Tasks = () => {
      */
 
     const createTask = useCallback((task: DocumentData) => {
-        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} taskDescription={task.description}
-                           onTaskClickFunc={setCurrentTaskID}/>
+        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID}/>
     }, [])
 
     const onAddTaskClick = useCallback(async () => {
@@ -70,7 +69,7 @@ const Tasks = () => {
         try {
             await setDoc(doc(db, "users", userInfo?.uid, "tasks", taskid), {
                 id: taskid,
-                name: "",
+                name: "Новая задача",
                 description: ""
             } as DocumentData)
             setCurrentTaskID(taskid)

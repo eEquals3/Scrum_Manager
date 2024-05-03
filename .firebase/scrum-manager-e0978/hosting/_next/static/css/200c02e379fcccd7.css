@@ -1,1 +1,0 @@
-div,div>div{display:flex;width:100%}div>div{align-items:center;height:100%;flex-direction:column}div>div>h1{display:flex;width:100%;justify-content:center}div>div>h1:after{position:absolute;content:"";top:11%;width:60%;height:0;border-bottom:1px solid #1852fa;box-shadow:0 0 20px 1px #398de0}div>div>span{display:flex;width:100%;height:100%}

@@ -4,7 +4,7 @@ import {memo, useCallback} from "react";
 interface Props {
     CommandId: string
     CommandName: string,
-    onTaskClickFunc: (taskId: string) => void
+    onTaskClickFunc: (commandId: string) => void
 }
 
 const CommandButton = (command: Props) => {

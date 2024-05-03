@@ -1,17 +1,28 @@
 "use client"
-import React, {memo, useCallback, useEffect, useState} from "react";
+import React, {memo, useCallback, useEffect, useMemo, useState} from "react";
 import "./commands.css"
 import {collection, doc, DocumentData, onSnapshot, setDoc} from "firebase/firestore";
 import {AuthContext} from "../../provider/AuthProvider";
 import {db} from "../../services/Firebase";
 import CommandButton from "../../../components/CommandButton/CommandButton";
+import PenIcon from "../../../public/icons/pen/PenIcon";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {commandNameSchema} from "../../validationSchema/commandSchema"
+import InputField from "../../../components/InputField/InputField";
+
 
 const Commands = () => {
-    const [currentCommandId, setCurrentCommand] = useState("")
-    const [commands, setCommands] = useState<DocumentData[]>([])
-
     const {user}: any = AuthContext();
     const userInfo = user.user;
+
+    const [currentCommandId, setCurrentCommand] = useState<string>("")
+    const [commands, setCommands] = useState<DocumentData[]>([])
+    const [commandState, setCommandState] = useState<string>("display")
+
+    const {handleSubmit, register, getValues, formState: {errors}, resetField} = useForm({
+        resolver: yupResolver(commandNameSchema),
+    })
 
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, "users", userInfo?.uid, "commands"), (snapshot => {
@@ -21,44 +32,56 @@ const Commands = () => {
         return () => unsubscribe();
     }, [userInfo?.uid])
 
-    useEffect(() => {
-        console.log('currentCommandId', JSON.stringify(currentCommandId, null, 2));
-    }, [currentCommandId]);
-
-    const createCommands = useCallback((command):DocumentData => {
-        return <CommandButton key = {command.id} CommandId={command.id} CommandName={command.name} onTaskClickFunc={setCurrentCommand}/>
+    const createCommands = useCallback((command: DocumentData) => {
+        return <CommandButton key={command.id} CommandId={command.id} CommandName={command.name}
+                              onTaskClickFunc={setCurrentCommand}/>
     }, [])
 
-    const onAddCommandClick = useCallback(async ()=>{
+    const onAddCommandClick = useCallback(async () => {
         const commandid = crypto.randomUUID()
-        try{
+        try {
             await setDoc(doc(db, "users", userInfo?.uid, "commands", commandid), {
                 id: commandid,
                 name: "Новая команда"
-            }as DocumentData)
+            } as DocumentData)
             setCurrentCommand(commandid)
-        }
-        catch (errors){
+        } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
-    },[userInfo?.uid])
+    }, [userInfo?.uid])
+
+    const currentCommand = useMemo(() => {
+        return (
+            commands.find((command) => (
+                command.id === currentCommandId
+            ))
+        )
+    }, [commands, currentCommandId])
 
     return (
         <div>
             <div>
-                <h1> Команды </h1>
-                <div>
+                <h1> Команды
                     <a>
                         список команд
                         <div>
                             {commands.map(createCommands)}
-                            <button onClick={onAddCommandClick}> + </button>
+                            <button onClick={onAddCommandClick}> +</button>
                         </div>
                     </a>
-                </div>
-                <span>
-                    {currentCommandId}
-                </span>
+                </h1>
+                {currentCommandId != "" ? (
+                    <span>
+                        <form onSubmit={handleSubmit}>
+                            {commandState === "display" ? (currentCommand.name) : null}
+                            {commandState === "redact" ?
+                                <InputField name="commandName" type="text" placeholder="" label="Название команды"
+                                            register={register} defaultValue={currentCommand.name}/> : null}
+                            <PenIcon onClickFunk={setCommandState} onClickState="redact"/>
+                        </form>
+                        {currentCommandId}
+                    </span>
+                ) : null}
             </div>
         </div>
     )

@@ -9,65 +9,58 @@ div > div {
     width: 100%;
     height: 100%;
     flex-direction: column;
+    position: relative;
 }
 
 div > div > h1 {
     display: flex;
     width: 100%;
     justify-content: center;
+    position:relative;
 }
 
 div > div > h1:after {
     position: absolute;
     content: '';
-    top: 6%;
+    top: 150%;
     width: 60%;
     height: 0;
     border-bottom: 1px solid #1852fa;
     box-shadow: 0 0 20px 1px rgba(57, 141, 224, 1);
 }
 
-div > div > span{
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-div > div {
-    position: relative;
-}
-
-div > div > a{
+div > div > h1 > a{
     position: absolute;
     top:-10%;
     left: 82%;
     background: white;
 }
 
-div > div > a{
+div > div > h1 > a{
     display: flex;
     flex-direction: column;
     align-items: center;
     font-size: 1.5rem;
+    font-weight: normal;
     width: 15%;
     padding: 0.5rem 0;
     border-radius: 0.5rem;
     border: 2px solid rgba(57, 141, 224, 1);
 }
 
-div > div > a:hover{
+div > div > h1 > a:hover{
     padding-bottom: 0;
     color: blue;
 }
 
 
-div > div > a:hover > div{
+div > div > h1 > a:hover > div{
     transition: all 0.3s;
     display: flex;
     transform: translateY(0);
 }
 
-div > div > a > div{
+div > div > h1 > a > div{
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -75,7 +68,7 @@ div > div > a > div{
     width: 100%;
 }
 
-div > div > a > div > button{
+div > div > h1 > a > div > button{
     font-size: 1.5rem;
     min-height: 2rem;
     border-radius: 0.3rem;
@@ -84,6 +77,24 @@ div > div > a > div > button{
     border: 2px solid rgba(57, 141, 224, 1);
 }
 
-div > div > a > div > button:hover{
+div > div > h1 > a > div > button:hover{
     color:blue;
+}
+
+div > div > span{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+div > div > span > form {
+    margin: 1rem 0;
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+}
+
+div > div > span > form > b{
+    width: 80%;
 }

@@ -1,0 +1,86 @@
+.Sprint{
+    flex: 0 0 auto;
+    word-break: break-all;
+    width: 20vw;
+    display: flex;
+    height: 98%;
+    border: 3px solid #3f5596;
+    border-radius: 2rem;
+    position: relative;
+    min-width: max-content;
+}
+
+.Sprint > h1:after{
+    top:120%
+}
+
+.Sprint > div{
+    height: max-content;
+    padding-bottom: 0.5rem;
+}
+
+.Sprint > span{
+    display: flex;
+}
+
+.Sprint > span > div{
+    width: 100%;
+
+}
+
+.TaskScroll{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    border-radius: 1rem;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding: 0.5rem;
+}
+
+.TaskScroll::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+.TaskScroll::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    border: 2px solid #3f5596;
+    background: linear-gradient(rgba(57, 141, 224, 0.6), #3f5596);
+}
+
+.Task{
+    display: flex;
+    width: calc(100% - 20px);
+    min-height: 5vh;
+    height: max-content;
+    border-radius: 1rem;
+    margin-left: 15px;
+    white-space: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+.Task:disabled{
+    background: rgba(108, 243, 58, 0.3);
+}
+
+.Task:disabled:hover{
+    color: rgba(54, 54, 54, 0.6);
+}
+
+.Sprint > button{
+    display: flex;
+    width: calc(100% - 20px);
+    border: 3px solid #3f5596;
+    min-height: 5vh;
+    height: max-content;
+    border-radius: 1rem;
+    white-space: normal;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}

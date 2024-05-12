@@ -7,7 +7,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {taskSchema} from "../../validationSchema/taskSchema";
 import SubmitButton from "../../../components/SubmitButton/SubmitButton";
 import {InputField, InputArea} from "../../../components/InputField/InputField";
-import {collection, deleteDoc, doc, DocumentData, onSnapshot, setDoc} from "firebase/firestore";
+import {collection, deleteDoc, doc, DocumentData, onSnapshot, query, setDoc, where} from "firebase/firestore";
 import {db} from "../../services/Firebase";
 import {AuthContext} from "../../provider/AuthProvider";
 import {updateDoc} from "@firebase/firestore";
@@ -25,19 +25,25 @@ const Tasks = () => {
 
     const [tasks, setTasks] = useState<DocumentData[]>([])
 
+    const taskQuery = query(collection(db, "users", userInfo?.uid, "tasks"), where("sprint", "==", ""))
+
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, "users", userInfo?.uid, "tasks"), (snapshot => {
+        const unsubscribe = onSnapshot(taskQuery, (snapshot => {
             const updatedTasks = snapshot.docs.map((doc) => doc.data())
             setTasks(updatedTasks);
         }))
         return () => unsubscribe();
-    }, [userInfo?.uid])
+    }, [userInfo.uid])
 
     useEffect(() => {
         if (currentTask?.name != "") {
             setTaskState("display")
         }
     }, [currentTaskID])
+
+    useEffect(() => {
+        console.log('tasks', JSON.stringify(tasks, null, 2));
+    }, [tasks]);
 
     /*useEffect(()=>{
         console.log('taskState', JSON.stringify(taskState, null, 2));
@@ -60,7 +66,7 @@ const Tasks = () => {
     }, [userInfo.uid])
      */
 
-    const createTask = useCallback((task: DocumentData) => {
+    const renderTask = useCallback((task: DocumentData) => {
         return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID}/>
     }, [])
 
@@ -70,7 +76,8 @@ const Tasks = () => {
             await setDoc(doc(db, "users", userInfo?.uid, "tasks", taskid), {
                 id: taskid,
                 name: "Новая задача",
-                description: ""
+                description: "",
+                sprint: ""
             } as DocumentData)
             setCurrentTaskID(taskid)
             setTaskState("redact")
@@ -88,7 +95,6 @@ const Tasks = () => {
     const onSaveClick = useCallback(async () => {
         try {
             const values = getValues()
-            console.log('values', JSON.stringify(values, null, 2));
             await updateDoc(doc(db, "users", userInfo?.uid, "tasks", currentTaskID), {
                 name: values["name"],
                 description: values["description"],
@@ -121,7 +127,7 @@ const Tasks = () => {
                 <span>
                     <span>
                         <span>
-                            {tasks.map(createTask)}
+                            {tasks.map(renderTask)}
                             <button className="TaskButton" onClick={onAddTaskClick}> + </button>
                         </span>
                     </span>

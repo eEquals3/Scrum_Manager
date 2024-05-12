@@ -10,6 +10,8 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {commandNameSchema} from "../../validationSchema/commandSchema"
 import InputField from "../../../components/InputField/InputField";
+import SaveIcon from "../../../public/icons/save/SaveIcon";
+import {updateDoc} from "@firebase/firestore";
 
 
 const Commands = () => {
@@ -20,7 +22,7 @@ const Commands = () => {
     const [commands, setCommands] = useState<DocumentData[]>([])
     const [commandState, setCommandState] = useState<string>("display")
 
-    const {handleSubmit, register, getValues, formState: {errors}, resetField} = useForm({
+    const {register, getValues, formState: {errors}, resetField, trigger} = useForm({
         resolver: yupResolver(commandNameSchema),
     })
 
@@ -32,7 +34,13 @@ const Commands = () => {
         return () => unsubscribe();
     }, [userInfo?.uid])
 
-    const createCommands = useCallback((command: DocumentData) => {
+    useEffect(() => {
+        resetField("commandName")
+        setCommandState("display")
+    }, [currentCommandId])
+
+
+    const renderCommand = useCallback((command: DocumentData) => {
         return <CommandButton key={command.id} CommandId={command.id} CommandName={command.name}
                               onTaskClickFunc={setCurrentCommand}/>
     }, [])
@@ -58,6 +66,37 @@ const Commands = () => {
         )
     }, [commands, currentCommandId])
 
+    const updateCommand = useCallback(async () => {
+        try {
+            const values = getValues()
+            await updateDoc(doc(db, "users", userInfo?.uid, "commands", currentCommandId), {
+                name: values["name"]
+            } as DocumentData)
+        } catch (errors) {
+            console.log('errors', JSON.stringify(errors, null, 2));
+        }
+        setCommandState("display")
+    }, [currentCommandId, getValues, userInfo?.uid])
+
+    const onSaveClick = useCallback(() => {
+        try {
+            trigger("name").then(() => {
+                console.log('поля проверены');
+                console.log('errors.name', JSON.stringify(errors.name, null, 2));
+                if (!errors.name) {
+                    updateCommand().catch((errors) => {
+                        console.log('errors', JSON.stringify(errors, null, 2));
+                    })
+                }
+            }).catch((errors) => {
+                console.log('errors', JSON.stringify(errors, null, 2));
+            })
+        } catch (errors) {
+            console.log('errors', JSON.stringify(errors, null, 2));
+        }
+
+    }, [errors, trigger, updateCommand])
+
     return (
         <div>
             <div>
@@ -65,22 +104,36 @@ const Commands = () => {
                     <a>
                         список команд
                         <div>
-                            {commands.map(createCommands)}
+                            {commands.map(renderCommand)}
                             <button onClick={onAddCommandClick}> +</button>
                         </div>
                     </a>
                 </h1>
                 {currentCommandId != "" ? (
                     <span>
-                        <form onSubmit={handleSubmit}>
-                            {commandState === "display" ? (currentCommand.name) : null}
+                        <form>
+                            {commandState === "display" ? (
+                                <>
+                                    {currentCommand.name}
+                                    <PenIcon onClickFunk={setCommandState} onClickState="redact"/>
+                                </>) : null}
                             {commandState === "redact" ?
-                                <InputField name="commandName" type="text" placeholder="" label="Название команды"
-                                            register={register} defaultValue={currentCommand.name}/> : null}
-                            <PenIcon onClickFunk={setCommandState} onClickState="redact"/>
+                                (<>
+                                    <div>
+                                        <InputField name="name" type="text" placeholder={""} label=""
+                                                    register={register} defaultValue={currentCommand.name}
+                                                    error={errors.name}/>
+                                    </div>
+                                    <SaveIcon onClickFunk={onSaveClick}/>
+                                </>) : null}
                         </form>
                         {currentCommandId}
                     </span>
+                ) : null}
+                {currentCommandId === ""? (
+                    <div className="CommandPlaceholder">
+                        Пожалуйста, выберите команду
+                    </div>
                 ) : null}
             </div>
         </div>

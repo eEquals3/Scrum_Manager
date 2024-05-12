@@ -39,7 +39,8 @@ const Register = () => {
                 await setDoc(doc(db, "users", userid), {
                     email: userData.email,
                     name: "",
-                    iconURL: ""
+                    iconURL: "",
+                    lastSprint: 1,
                 } as DocumentData);
             } catch (errors) {
                 console.log('errors adding document', JSON.stringify(errors, null, 2));

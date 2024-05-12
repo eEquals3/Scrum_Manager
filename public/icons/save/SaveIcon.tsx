@@ -1,24 +1,23 @@
 import Image from 'next/image';
-import penIcon from "./pencil-edit-button-svgrepo-com.svg";
+import saveIcon from "./save-item-1411-svgrepo-com.svg";
 import React, {memo, useCallback} from "react";
-import "./PenIcon.css"
+import "./SaveIcon.css"
 
 interface Props {
-    onClickState: string
-    onClickFunk: (state:string) => void
+    onClickFunk: () => {}
 }
 
-const PenIcon = (props: Props) => {
+const SaveIcon = (props: Props) => {
 
     const onIconClick = useCallback(()=>{
-        props.onClickFunk(props.onClickState)
+        props.onClickFunk()
     },[props])
 
     return (
-        <div className="PenIcon">
+        <div className="SaveIcon">
             <Image
                 onClick={onIconClick}
-                src={penIcon}
+                src={saveIcon}
                 alt="Редактировать"
                 width={30}
                 height={30}
@@ -27,4 +26,4 @@ const PenIcon = (props: Props) => {
     )
 }
 
-export default memo(PenIcon)
+export default memo(SaveIcon)

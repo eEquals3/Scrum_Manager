@@ -9,13 +9,14 @@ div > div {
     width: 100%;
     height: 100%;
     flex-direction: column;
+    position: relative;
 }
 
 div > div > h1 {
     display: flex;
     width: 100%;
     justify-content: center;
-    position: relative;
+    position:relative;
 }
 
 div > div > h1:after {
@@ -24,12 +25,166 @@ div > div > h1:after {
     top: 150%;
     width: 60%;
     height: 0;
+    z-index: -1;
     border-bottom: 1px solid #1852fa;
     box-shadow: 0 0 20px 1px rgba(57, 141, 224, 1);
 }
 
+div > div > h1 > a{
+    position: absolute;
+    top:-10%;
+    background: white;
+}
+
+div > div > h1 > a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    font-size: 1.5rem;
+    font-weight: normal;
+    width: 15%;
+    min-width: max-content;
+    padding: 0.5rem 0;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(57, 141, 224, 1);
+    left: 75%;
+    transition: width 0.3s linear, left 0.3s linear;
+}
+
+div > div > h1 > a:hover{
+    padding-bottom: 0;
+    color: blue;
+    width: 25%;
+    left: 70%;
+    transition: width 0.3s linear, left 0.3s linear;
+}
+
+div > div > h1 > a:hover > div{
+    display: flex;
+}
+
+div > div > h1 > a > div{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0.3rem;
+    width: 100%;
+}
+
+div > div > h1 > a > div > button{
+    font-size: 1.5rem;
+    border-radius: 0.3rem;
+    min-height: 2rem;
+    padding: 0.2rem 0;
+    width: 100%;
+    border: 2px solid rgba(57, 141, 224, 1);
+    z-index: 1;
+}
+
 div > div > span{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 100%;
+}
+
+div > div > span > div{
+    display: flex;
+    white-space: nowrap;
+    flex-direction: row;
+    width: 85vw;
+    height: 58%;
+    margin: 1%;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    scroll-padding: 1rem;
+    gap: 0.5rem;
+}
+
+div > div > span > div::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+div > div > span > div::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    border: 2px solid #3f5596;
+    background: linear-gradient(rgba(57, 141, 224, 0.6), #3f5596);
+}
+
+div > div > span > div > button{
+    height: 98%;
+    font-size: 1.5rem;
+    border-radius: 0.3rem;
+    border: 2px solid rgba(57, 141, 224, 1);
+}
+
+div > div > span > div > button:hover{
+    color: blue;
+}
+
+div > div > span > span{
+    display: flex;
+    flex-direction: row;
+    height: 40%;
+    width: 100%;
+    column-gap: 1rem;
+}
+
+div > div > span > span > span{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+}
+
+div > div > span > span > span > p{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+.TaskList{
+    display: flex;
+    margin-left: 3%;
+    flex-direction: column;
+    min-width: max-content;
+    width: 21vw;
+    white-space: nowrap;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding: 1rem;
+    gap: 0.5rem;
+    border-radius: 1rem;
+    border: 2px solid #3f5596;
+    height: 90%;
+}
+
+.TaskList::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+.TaskList::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    border: 2px solid #3f5596;
+    background: linear-gradient(rgba(57, 141, 224, 0.6), #3f5596);
+}
+
+.TaskList > button{
+    display: flex;
+    width: 98%;
+    min-height: 5vh;
+    height: max-content;
+    border-radius: 1rem;
+    min-width: max-content;
+    white-space: normal;
+    align-items: center;
+    justify-content: center;
 }

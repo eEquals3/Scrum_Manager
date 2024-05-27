@@ -35,7 +35,7 @@ const Commands = () => {
     }, [userInfo?.uid])
 
     useEffect(() => {
-        resetField("commandName")
+        resetField("name")
         setCommandState("display")
     }, [currentCommandId])
 
@@ -114,14 +114,14 @@ const Commands = () => {
                         <form>
                             {commandState === "display" ? (
                                 <>
-                                    {currentCommand.name}
+                                    {currentCommand?.name}
                                     <PenIcon onClickFunk={setCommandState} onClickState="redact"/>
                                 </>) : null}
                             {commandState === "redact" ?
                                 (<>
                                     <div>
                                         <InputField name="name" type="text" placeholder={""} label=""
-                                                    register={register} defaultValue={currentCommand.name}
+                                                    register={register} defaultValue={currentCommand?.name}
                                                     error={errors.name}/>
                                     </div>
                                     <SaveIcon onClickFunk={onSaveClick}/>

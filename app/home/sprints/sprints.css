@@ -87,7 +87,7 @@ div > div > span{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 93%;
 }
 
 div > div > span > div{
@@ -95,8 +95,8 @@ div > div > span > div{
     white-space: nowrap;
     flex-direction: row;
     width: 85vw;
-    height: 58%;
-    margin: 1%;
+    height: 57%;
+    margin: 1% 0;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -125,14 +125,104 @@ div > div > span > div > button{
 
 div > div > span > div > button:hover{
     color: blue;
+    border: 2px solid blue;
 }
 
 div > div > span > span{
     display: flex;
     flex-direction: row;
     height: 40%;
-    width: 100%;
+    width: 98%;
     column-gap: 1rem;
+    justify-content: space-around;
+}
+
+.TaskHeader{
+    display: flex;
+    flex-direction: row;
+    height: max-content;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.ButtonTaskEnd{
+    border-radius: 1rem;
+    border: 2px solid rgba(57, 141, 224, 1);
+    width: max-content;
+    height: 5vh;
+    padding: 0 1rem;
+}
+
+.ButtonTaskEnd:hover{
+    color: blue;
+    border: 2px solid blue;
+}
+
+.TaskAllDescription{
+    display: flex;
+    flex-direction: row;
+    height: 32%;
+    width: 98%;
+    column-gap: 1rem;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.TaskDesc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #3f5596;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    white-space: normal;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    position:relative;
+    row-gap: 1rem;
+}
+
+.TaskDesc:after {
+    position: absolute;
+    content: '';
+    top: 12%;
+    width: 60%;
+    height: 0;
+    z-index: -1;
+    border-bottom: 1px solid #1852fa;
+    box-shadow: 0 0 20px 1px rgba(57, 141, 224, 1);
+}
+
+.TaskDesc > div{
+    display: flex;
+}
+
+.TaskDesc::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+.TaskDesc::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    border: 2px solid #3f5596;
+    background: linear-gradient(rgba(57, 141, 224, 0.6), #3f5596);
+}
+
+.Description{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+}
+
+.Description > p{
+    margin: 0 0 0.5rem 0;
 }
 
 div > div > span > span > span{
@@ -148,9 +238,20 @@ div > div > span > span > span > p{
     margin: 1rem 0;
 }
 
+.TaskListContainer{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+.TaskListContainer > h2{
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
 .TaskList{
     display: flex;
-    margin-left: 3%;
     flex-direction: column;
     min-width: max-content;
     width: 21vw;
@@ -160,10 +261,10 @@ div > div > span > span > span > p{
     scroll-behavior: smooth;
     overflow-x: hidden;
     scroll-padding: 1rem;
-    gap: 0.5rem;
+    gap: 1%;
     border-radius: 1rem;
     border: 2px solid #3f5596;
-    height: 90%;
+    height: 95%;
 }
 
 .TaskList::-webkit-scrollbar{
@@ -178,6 +279,7 @@ div > div > span > span > span > p{
 }
 
 .TaskList > button{
+    z-index: 1;
     display: flex;
     width: 98%;
     min-height: 5vh;
@@ -187,4 +289,33 @@ div > div > span > span > span > p{
     white-space: normal;
     align-items: center;
     justify-content: center;
+}
+
+.ButtonContainer{
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    row-gap: 1rem;
+    height: calc(95% - 4rem);
+}
+
+.ButtonContainer > button{
+    border: 2px solid #3f5596;
+    border-radius: 1rem;
+    min-height: 5vh;
+    font-size: 1.5rem;
+}
+
+.ButtonContainer > button:hover{
+    color: blue;
+    border: 2px solid blue;
+}
+
+.Description {
+    margin-top: 4rem;
+    display: flex;
+    height: calc(95% - 4rem);
+    white-space: normal;
 }

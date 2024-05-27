@@ -1,21 +1,25 @@
 import "./TaskButton.css"
-import {memo, useCallback} from "react";
+import React, {memo, useCallback} from "react";
 
 interface Props {
     taskId: string
     taskName: string,
-    onTaskClickFunc: (taskId: string) => void
+    onTaskClickFunc?: (taskId: string) => void
+    score: number
 }
 
 const TaskButton = (task: Props) => {
 
     const onTaskClick = useCallback(() => {
-        task.onTaskClickFunc(task.taskId)
+        if (task.onTaskClickFunc) {
+            task.onTaskClickFunc(task.taskId)
+        }
     }, [task])
 
     return (
         <button className="TaskButton" key={task.taskId} onClick={onTaskClick}>
             {task.taskName}
+            {task.score ? <div className="Score"> {"Сложность: " + task.score} </div> : null}
         </button>
     )
 }

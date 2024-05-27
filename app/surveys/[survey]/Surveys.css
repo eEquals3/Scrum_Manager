@@ -1,0 +1,66 @@
+.SurveysBody {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    width: 100vw;
+    min-height: 100vh;
+    height: max-content;
+    background: linear-gradient(to bottom right, #a1a1a2, #b8d2d2);
+}
+
+.SurveyHeader {
+    width: 100%;
+    display: flex;
+    font-size: 2rem;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(57, 141, 224, 0.6);
+    padding: 1vh 0 0 0;
+    color: #363636;
+}
+
+.NameInputContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 98%;
+    column-gap: 2rem;
+}
+
+.NameInputContainer > a > button {
+    min-width: max-content;
+    width: 20vw;
+}
+
+.SurveyTaskPart {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+}
+
+.SurveyFooter{
+    display: flex;
+    background: rgba(57, 141, 224, 0.6);
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+}
+
+.SurveyFooter > button{
+    min-height: max-content;
+    padding: 1vh;
+    min-width: max-content;
+    width: 30%;
+    border-radius: 1rem;
+    border: 2px solid #3f5596;
+    font-size: 1.5rem;
+    margin: 1rem
+}
+
+.SurveyFooter > button:hover{
+    color: blue;
+    border: 2px solid blue
+}

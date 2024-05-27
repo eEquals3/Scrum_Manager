@@ -1,13 +1,14 @@
 .Sprint{
     flex: 0 0 auto;
     word-break: break-all;
-    width: 20vw;
     display: flex;
     height: 98%;
     border: 3px solid #3f5596;
     border-radius: 2rem;
     position: relative;
-    min-width: max-content;
+    min-width: 20vw;
+    width: min-content;
+    max-width: 60vw;
 }
 
 .Sprint > h1:after{
@@ -53,6 +54,7 @@
 
 .Task{
     display: flex;
+    flex-direction: column;
     width: calc(100% - 20px);
     min-height: 5vh;
     height: max-content;
@@ -63,18 +65,88 @@
     justify-content: center;
 }
 
-.Task:disabled{
+.Task > div{
+     display: flex;
+     font-size: 1rem;
+     justify-content: center;
+     align-items: flex-end;
+     margin-bottom: 5px;
+ }
+
+.Task:hover{
+    color: blue;
+    border: 2px solid blue;
+}
+
+.TaskCompleted > .Score{
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    height: max-content;
+    margin: 0;
+}
+
+.TaskCompleted{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 20px);
+    min-height: 5vh;
+    height: max-content;
+    border-radius: 1rem;
+    margin-left: 15px;
+    white-space: normal;
+    align-items: center;
+    justify-content: center;
     background: rgba(108, 243, 58, 0.3);
 }
 
-.Task:disabled:hover{
+.TaskCompleted > div{
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 5px;
+}
+
+.TaskCompleted:hover{
     color: rgba(54, 54, 54, 0.6);
+    border: 2px solid rgba(54, 54, 54, 0.6);
+}
+
+.FailedTask{
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 20px);
+    min-height: 5vh;
+    height: max-content;
+    border-radius: 1rem;
+    margin-left: 15px;
+    white-space: normal;
+    align-items: center;
+    justify-content: center;
+}
+
+.FailedTask > .Score{
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    height: max-content;
+    margin: 0;
+}
+
+.FailedTask:disabled{
+    background: rgba(243, 58, 58, 0.3);
+}
+
+.FailedTask:disabled:hover{
+    color: rgba(54, 54, 54, 0.6);
+    border: 2px solid rgba(54, 54, 54, 0.6);
 }
 
 .Sprint > button{
     display: flex;
     width: calc(100% - 20px);
-    border: 3px solid #3f5596;
+    border: 2px solid #3f5596;
     min-height: 5vh;
     height: max-content;
     border-radius: 1rem;
@@ -83,4 +155,5 @@
     justify-content: center;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    min-width: max-content;
 }

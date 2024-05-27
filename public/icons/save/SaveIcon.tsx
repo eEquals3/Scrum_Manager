@@ -4,7 +4,7 @@ import React, {memo, useCallback} from "react";
 import "./SaveIcon.css"
 
 interface Props {
-    onClickFunk: () => {}
+    onClickFunk: () => any
 }
 
 const SaveIcon = (props: Props) => {

@@ -67,7 +67,7 @@ const Tasks = () => {
      */
 
     const renderTask = useCallback((task: DocumentData) => {
-        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID}/>
+        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID} score={task.score}/>
     }, [])
 
     const onAddTaskClick = useCallback(async () => {
@@ -77,7 +77,8 @@ const Tasks = () => {
                 id: taskid,
                 name: "Новая задача",
                 description: "",
-                sprint: ""
+                sprint: "",
+                completed: false
             } as DocumentData)
             setCurrentTaskID(taskid)
             setTaskState("redact")

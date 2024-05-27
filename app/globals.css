@@ -9,5 +9,10 @@ Body{
     font-family: sans-serif;
     color: #363636;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.Body::-webkit-scrollbar {
+    width: 0;
 }

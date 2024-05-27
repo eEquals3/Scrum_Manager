@@ -36,12 +36,6 @@ const Tasks = () => {
     }, [userInfo.uid])
 
     useEffect(() => {
-        if (currentTask?.name != "") {
-            setTaskState("display")
-        }
-    }, [currentTaskID])
-
-    useEffect(() => {
         console.log('tasks', JSON.stringify(tasks, null, 2));
     }, [tasks]);
 
@@ -67,7 +61,7 @@ const Tasks = () => {
      */
 
     const renderTask = useCallback((task: DocumentData) => {
-        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID} score={task.score}/>
+        return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID} onTaskDisplayFunc={setTaskState} score={task.score}/>
     }, [])
 
     const onAddTaskClick = useCallback(async () => {
@@ -79,9 +73,10 @@ const Tasks = () => {
                 description: "",
                 sprint: "",
                 completed: false
-            } as DocumentData)
-            setCurrentTaskID(taskid)
-            setTaskState("redact")
+            } as DocumentData).then(()=>{
+                setCurrentTaskID(taskid)
+                setTaskState("redact")
+            })
         } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
@@ -91,7 +86,7 @@ const Tasks = () => {
         resetField("name")
         resetField("description")
         setTaskState("redact")
-    }, [])
+    }, [resetField])
 
     const onSaveClick = useCallback(async () => {
         try {
@@ -149,7 +144,7 @@ const Tasks = () => {
                             <form onSubmit={handleSubmit(onSaveClick)}>
                                 <h1>
                                     Имя задачи
-                                    <InputField register={register} name="name" label="" type="text"
+                                    <InputField focus={true} register={register} name="name" label="" type="text"
                                                 placeholder={""} error={errors.name} defaultValue={currentTask?.name}/>
                                 </h1>
                                 <div>

@@ -56,7 +56,7 @@ const Register = () => {
             <div>
                 <span>Регистрация</span>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <InputField register={register} error={errors.email} type="text" placeholder=" Введите email..."
+                    <InputField focus={true} register={register} error={errors.email} type="text" placeholder=" Введите email..."
                                 name="email" label="Email"/>
                     <InputField register={register} error={errors.password} type="password"
                                 placeholder=" Введите пароль..." name="password" label="Пароль"/>

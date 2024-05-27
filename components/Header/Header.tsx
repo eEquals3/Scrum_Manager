@@ -13,15 +13,12 @@ const Header = () => {
     const {user}: any = AuthContext();
     const router = useRouter();
 
-    const logOut = useCallback(() => {
-        router.push(ROOT_ROUTE)
-        setTimeout(() => {
-            signOut(auth).then((response) => {
-                console.log("response", response);
-            }).catch((e) => {
-                console.log("error", e);
-            })
-        }, 100);
+    const logOut = useCallback(async () => {
+        router.replace(ROOT_ROUTE)
+        setTimeout(()=>{
+            signOut(auth)
+        }, 500)
+        //const result = await signOut(auth)
     }, [router])
 
     const onLogoClick = useCallback(() => {
@@ -36,7 +33,7 @@ const Header = () => {
         <header>
             <nav>
                 <li onClick={onLogoClick}>
-                    <div>logo</div>
+                    <div>На главную</div>
                 </li>
                 <ul>
                     {!user?.isLogin ? (

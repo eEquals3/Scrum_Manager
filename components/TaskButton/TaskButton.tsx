@@ -5,7 +5,9 @@ interface Props {
     taskId: string
     taskName: string,
     onTaskClickFunc?: (taskId: string) => void
-    score: number
+    onTaskDisplayFunc?: (state: string) => void
+    score?: number
+    scoreColor?: string
 }
 
 const TaskButton = (task: Props) => {
@@ -14,12 +16,15 @@ const TaskButton = (task: Props) => {
         if (task.onTaskClickFunc) {
             task.onTaskClickFunc(task.taskId)
         }
+        if (task.onTaskDisplayFunc) {
+            task.onTaskDisplayFunc("display")
+        }
     }, [task])
 
     return (
         <button className="TaskButton" key={task.taskId} onClick={onTaskClick}>
             {task.taskName}
-            {task.score ? <div className="Score"> {"Сложность: " + task.score} </div> : null}
+            <div className="Score" style={{ background: task.scoreColor}}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
         </button>
     )
 }

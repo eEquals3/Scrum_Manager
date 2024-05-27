@@ -1,7 +1,9 @@
 import {useDraggable} from '@dnd-kit/core';
 import "../components/TaskButton/TaskButton.css"
+import React from "react";
 
 export function DraggableButton(props: any) {
+
     const {attributes, listeners, setNodeRef, transform} = useDraggable({
         id: props.id,
     });
@@ -12,7 +14,7 @@ export function DraggableButton(props: any) {
     return (
         <button className="TaskButton" key={props.id} ref={setNodeRef} style={style} {...listeners} {...attributes}>
             {props.name}
-            {props.score? <div className="Score"> {"Сложность: " + props.score} </div> : null}
+            <div className="Score" style={{ background: props.backColor}}> {props.score ? "Сложность: " + props.score : "Сложность неизвестна"} </div>
             {props.children}
         </button>
     );

@@ -2,17 +2,25 @@
     flex: 0 0 auto;
     word-break: break-all;
     display: flex;
-    height: 98%;
+    height: 92.5%;
     border: 3px solid #3f5596;
     border-radius: 2rem;
     position: relative;
     min-width: 20vw;
     width: min-content;
     max-width: 60vw;
+    padding-bottom: 1.5%;
+}
+
+.Sprint > h1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
 }
 
 .Sprint > h1:after{
-    top:120%
+    top:90%
 }
 
 .Sprint > div{
@@ -56,13 +64,16 @@
     display: flex;
     flex-direction: column;
     width: calc(100% - 20px);
-    min-height: 5vh;
+    min-height: max-content;
     height: max-content;
     border-radius: 1rem;
     margin-left: 15px;
     white-space: normal;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 1rem ;
 }
 
 .Task > div{
@@ -78,19 +89,22 @@
     border: 2px solid blue;
 }
 
-.TaskCompleted > .Score{
-    font-size: 1rem;
+.Task > .Score{
+    position: absolute;
+    bottom: 0;
+    font-size: 0.9rem;
     display: flex;
     justify-content: center;
     height: max-content;
     margin: 0;
+    width: 100%;
 }
 
 .TaskCompleted{
     display: flex;
     flex-direction: column;
     width: calc(100% - 20px);
-    min-height: 5vh;
+    min-height: max-content;
     height: max-content;
     border-radius: 1rem;
     margin-left: 15px;
@@ -98,6 +112,9 @@
     align-items: center;
     justify-content: center;
     background: rgba(108, 243, 58, 0.3);
+    padding-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .TaskCompleted > div{
@@ -105,7 +122,17 @@
     font-size: 1rem;
     justify-content: center;
     align-items: flex-end;
-    margin-bottom: 5px;
+}
+
+.TaskCompleted > .Score{
+    position: absolute;
+    bottom: 0;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    height: max-content;
+    margin: 0;
+    width: 100%;
 }
 
 .TaskCompleted:hover{
@@ -124,14 +151,20 @@
     white-space: normal;
     align-items: center;
     justify-content: center;
+    padding-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .FailedTask > .Score{
-    font-size: 1rem;
+    position: absolute;
+    bottom: 0;
+    font-size: 0.9rem;
     display: flex;
     justify-content: center;
     height: max-content;
     margin: 0;
+    width: 100%;
 }
 
 .FailedTask:disabled{

@@ -12,6 +12,7 @@ import {updatePassword, updateProfile} from "@firebase/auth";
 import {doc, updateDoc} from "@firebase/firestore";
 import {db} from "../services/Firebase";
 import {DocumentData} from "firebase/firestore";
+import Modal from "../../components/Modal/Modal";
 
 const Profile = () => {
     const {user}: any = AuthContext();
@@ -28,7 +29,6 @@ const Profile = () => {
     } = useForm({
         resolver: yupResolver(passwordSchema),
     })
-
     const [loginChange, setLoginChange] = useState<string>("none");
 
     const onPressChangeProfile = useCallback(() => {
@@ -69,6 +69,7 @@ const Profile = () => {
         updatePassword(userInfo, values.password).then((r) => {
             console.log("password successfully changed", r);
             setLoginChange("none");
+            alert("Пароль успешно иземенен")
         }).catch((e) => {
             console.log("errors", e?.message)
         })

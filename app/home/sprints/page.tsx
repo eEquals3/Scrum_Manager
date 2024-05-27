@@ -22,6 +22,7 @@ import {DroppableList} from '../../../components/DroppableList';
 import {DraggableButton} from '../../../components/DraggableButton';
 import dayjs from "dayjs";
 import Modal from "../../../components/Modal/Modal";
+import TaskButton from "../../../components/TaskButton/TaskButton";
 
 const Sprints = () => {
 
@@ -45,6 +46,30 @@ const Sprints = () => {
     const [surveyUsers, setSurveyUsers] = useState<DocumentData[]>([])
     const [surveyTasks, setSurveyTasks] = useState<DocumentData[]>([])
     const [modalResultVisible, setModalResultVisible] = useState<boolean>(false)
+
+    const checkColor = (score: number) => {
+        switch (true) {
+            case (score <= 2):
+                return "#22ff00";
+            case (score <= 3):
+                return "#76eb00";
+            case (score <= 4):
+                return "#9fd600";
+            case (score <= 5):
+                return "#bac100";
+            case (score <= 6):
+                return "#cfaa00";
+            case (score <= 7):
+                return "#e19000";
+            case (score <= 8):
+                return "#f17100";
+            case (score <= 9):
+                return "#fb4c00";
+            case (score <= 10):
+                return "#ff0000";
+            default:
+        }
+    };
 
     const sprintsQuery = useMemo(() => {
         return query(collection(db, "users", userInfo?.uid, "sprints"), where("commandId", "==", currentCommandId), orderBy("creationDate", "desc"), limit(sprintsLimit));
@@ -119,7 +144,15 @@ const Sprints = () => {
     }, [userInfo?.uid])
 
     const renderTask = useCallback((task: DocumentData) => {
-        return <DraggableButton key={task.id} id={task.id} name={task.name} score={task.score}/>
+        return <DraggableButton backColor={checkColor(task.score)} key={task.id} id={task.id} name={task.name}
+                                score={task.score}/>
+    }, [])
+
+    const renderDraggedTask = useCallback((selectedTask) => {
+        if (selectedTask != null) {
+            return <TaskButton taskId={selectedTask.id} taskName={selectedTask.name} score={selectedTask.score}
+                               scoreColor={checkColor(selectedTask.score)}/>
+        }
     }, [])
 
     function handleDragStart(event: any) {
@@ -211,7 +244,11 @@ const Sprints = () => {
         if (surveyState != "created") {
             setModalVisible(true)
             await setDoc(doc(db, "users", userInfo?.uid, "survey", "survey"), {
-                selectedTasks: selectedTasks.map((task)=>({id: task.id, name: task.name, description: task.description})),
+                selectedTasks: selectedTasks.map((task) => ({
+                    id: task.id,
+                    name: task.name,
+                    description: task.description
+                })),
                 users: [],
                 userScore: [],
                 completed: false
@@ -244,16 +281,16 @@ const Sprints = () => {
         //    console.log('sumScores', JSON.stringify(sumScores, null, 2));
         //    //(sumScores, task.mappedTasks.length)
         //}
-        const localSurveyResults = surveyResults.reduce((acc,el) => {
-            for(const item of el.mappedTasks) {
-                acc[item.id] =  acc[item.id] ?  acc[item.id] + item.score : item.score
+        const localSurveyResults = surveyResults.reduce((acc, el) => {
+            for (const item of el.mappedTasks) {
+                acc[item.id] = acc[item.id] ? acc[item.id] + item.score : item.score
             }
             return acc
         }, {})
         console.log('localSurveyResults', JSON.stringify(localSurveyResults, null, 2));
         surveyTasks.forEach(task => {
-            updateDoc(doc(db, "users", userInfo?.uid, "tasks", task.id),{
-                score: localSurveyResults[task.id]/surveyUsers.length
+            updateDoc(doc(db, "users", userInfo?.uid, "tasks", task.id), {
+                score: localSurveyResults[task.id] / surveyUsers.length
             } as DocumentData)
         })
     }, [surveyResults, surveyTasks, surveyUsers.length, userInfo?.uid])
@@ -264,9 +301,7 @@ const Sprints = () => {
             {modalVisible ? <Modal modalHeader={"Опрос создан!"}
                                    modalText={`Опрос успешно создан и доступен по ссылке: https://scrum-manager-e0978.web.app/surveys/${userInfo?.uid}`}
                                    modalButtonText="Ок" closeModalFunc={setModalVisible}/> : null}
-            {modalResultVisible ? <Modal modalHeader={"Результаты опроса"}
-                                   modalText={`Всего участников опроса: ${surveyUsers.length}`}
-                                   modalButtonText="Ок" closeModalFunc={setModalResultVisible}/> : null}
+
             <div>
                 <h1> Спринты
                     <a>
@@ -306,14 +341,11 @@ const Sprints = () => {
                                         duration: 500,
                                         easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
                                     }}>
-                                        {activeId && tasksList.map((task) => (task.id)).includes(activeId) ? (<button
-                                                // @ts-ignore: Object is possibly 'null'.
-                                                className="TaskButtonDrag"> {tasksList ? (tasksList.find((task) => (task.id === activeId)).name) : null}</button>
+                                        {activeId && tasksList.map((task) => (task.id)).includes(activeId) ? (
+                                            renderDraggedTask(tasksList.find((task) => (task.id === activeId)))
                                         ) : null}
                                         {activeId && selectedTasks.map((task) => (task.id)).includes(activeId) ? (
-                                            <button
-                                                // @ts-ignore: Object is possibly 'null'.
-                                                className="TaskButtonDrag"> {selectedTasks ? (selectedTasks.find((task) => (task.id === activeId)).name) : null}</button>
+                                            renderDraggedTask(selectedTasks.find((task) => (task.id === activeId)))
                                         ) : null}
                                 </DragOverlay>
                                 </DndContext>
@@ -329,14 +361,17 @@ const Sprints = () => {
                                         <button onClick={() => setAddSprintState(false)}> Отмена </button>
                                         {surveyState === "created" ? (
                                             <>
-                                                <button onClick={() => setModalResultVisible(true)}> Результаты </button>
-                                                <button onClick={endSurvey}> Завершить опрос </button>
+                                                <button onClick={endSurvey}> Завершить опрос</button>
+                                                <div style={{
+                                                    display: "flex",
+                                                    justifyContent: "center"
+                                                }}> {`Всего проголосовало: ${surveyUsers.length}`}</div>
                                             </>
                                         ) : null}
                                     </div>
                             </span>
                         ) : null}
-                        {!addSprintState && currentTask?.name != "" ? (
+                        {!addSprintState && currentTask?.name ? (
                             <>
                                 <div className="TaskHeader">
                                     <h1>{`Задача «${currentTask?.name}»`}</h1>
@@ -350,12 +385,6 @@ const Sprints = () => {
                                     Описание выбранной задачи
                                     <div>
                                         {currentTask?.description}
-                                    </div>
-                                </div>
-                                <div className="TaskDesc" key={"TaskMarks"}>
-                                    Оценки
-                                    <div>
-                                        {currentTask?.score}
                                     </div>
                                 </div>
                             </span>

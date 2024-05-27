@@ -15,14 +15,17 @@ div > div {
 div > div > h1 {
     display: flex;
     width: 100%;
+    height: 8%;
     justify-content: center;
     position:relative;
+    margin: 0;
+    align-items: center;
 }
 
 div > div > h1:after {
     position: absolute;
     content: '';
-    top: 150%;
+    top: 100%;
     width: 60%;
     height: 0;
     z-index: -1;
@@ -48,6 +51,7 @@ div > div > h1 > a{
     padding: 0.5rem 0;
     border-radius: 0.5rem;
     border: 2px solid rgba(57, 141, 224, 1);
+    top: 25%;
     left: 75%;
     transition: width 0.3s linear, left 0.3s linear;
 }
@@ -87,7 +91,7 @@ div > div > span{
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 93%;
+    height: 92%;
 }
 
 div > div > span > div{
@@ -242,6 +246,7 @@ div > div > span > span > span > p{
     display: flex;
     flex-direction: column;
     width: max-content;
+    max-width: 22vw;
 }
 
 .TaskListContainer > h2{
@@ -255,16 +260,16 @@ div > div > span > span > span > p{
     flex-direction: column;
     min-width: max-content;
     width: 21vw;
-    white-space: nowrap;
+    max-width: 100%;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     overflow-x: hidden;
-    scroll-padding: 1rem;
-    gap: 1%;
+    gap: 0.3rem;
     border-radius: 1rem;
     border: 2px solid #3f5596;
     height: 95%;
+    padding: 0.2rem;
 }
 
 .TaskList::-webkit-scrollbar{
@@ -282,13 +287,15 @@ div > div > span > span > span > p{
     z-index: 1;
     display: flex;
     width: 98%;
-    min-height: 5vh;
+    max-width: 20vw;
     height: max-content;
+    max-height: max-content;
     border-radius: 1rem;
-    min-width: max-content;
-    white-space: normal;
     align-items: center;
     justify-content: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal;
 }
 
 .ButtonContainer{
@@ -304,7 +311,9 @@ div > div > span > span > span > p{
 .ButtonContainer > button{
     border: 2px solid #3f5596;
     border-radius: 1rem;
-    min-height: 5vh;
+    min-height: max-content;
+    height: 5vh;
+    padding: 3% 0;
     font-size: 1.5rem;
 }
 
@@ -318,4 +327,17 @@ div > div > span > span > span > p{
     display: flex;
     height: calc(95% - 4rem);
     white-space: normal;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.Description::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+.Description::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    border: 2px solid #3f5596;
+    background: linear-gradient(rgba(57, 141, 224, 0.6), #3f5596);
 }

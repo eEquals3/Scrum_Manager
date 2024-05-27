@@ -13,7 +13,33 @@ interface Props {
     taskClickSetView: (b: boolean) => void;
 }
 
+
+
 const Sprint = ((props: Props) => {
+
+    const checkColor = (score:number) => {
+        switch (true) {
+            case (score <= 2):
+                return "#22ff00";
+            case (score <= 3):
+                return "#76eb00";
+            case (score <= 4):
+                return "#9fd600";
+            case (score <= 5):
+                return "#bac100";
+            case (score <= 6):
+                return "#cfaa00";
+            case (score <= 7):
+                return "#e19000";
+            case (score <= 8):
+                return "#f17100";
+            case (score <= 9):
+                return "#fb4c00";
+            case (score <= 10):
+                return "#ff0000";
+            default:
+        }
+    };
 
     const [sprintState, setSprintState] = useState<string>(props.sprint.sprintState)
     const header = props.sprint.number
@@ -50,17 +76,17 @@ const Sprint = ((props: Props) => {
         return <button className={task.completed === false ? "Task" : "TaskCompleted"} key={`Task ${task.id}`}
                        onClick={() => onTaskClick(task)}>
             {task.name}
-            {task.score ? <div className="Score"> {"Сложность: " + task.score} </div> : null}
             {task.completedDate ?
                 <div key={`TaskDate ${task.id}`}>
                     {`дата выполнения: ${task.completedDate}`}
                 </div> : null}
+            <div className="Score" style={{ background: checkColor(task.score)}}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
         </button>
     }, [onTaskClick])
 
     const renderFailedTask = useCallback((task: DocumentData) => {
         return <button className="FailedTask" key={"FailedTask" + task.id} disabled={true}> {task.name} {task.score ?
-            <div className="Score"> {"Сложность: " + task.score} </div> : null}</button>
+            <div className="Score" style={{ background: checkColor(task.score)}}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div> : null}</button>
     }, [])
 
     const sprintScore = useMemo(()=>{

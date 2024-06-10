@@ -7,7 +7,7 @@
     width: 100vw;
     min-height: 100vh;
     height: max-content;
-    background: linear-gradient(to bottom right, #a1a1a2, #b8d2d2);
+    background: var(--main-bg-color);
 }
 
 .SurveyHeader {
@@ -16,9 +16,10 @@
     font-size: 2rem;
     flex-direction: column;
     align-items: center;
-    background: rgba(57, 141, 224, 0.6);
+    background: var(--main-component-color);
     padding: 1vh 0 0 0;
-    color: #363636;
+    color: var(--main-hover-text-color);
+    margin-bottom: 1rem;
 }
 
 .NameInputContainer {
@@ -38,29 +39,26 @@
     display: flex;
     flex-direction: column;
     height: max-content;
+    row-gap: 1rem;
+    padding-bottom: 1rem;
 }
 
 .SurveyFooter{
     display: flex;
-    background: rgba(57, 141, 224, 0.6);
+    align-items: center;
+    height: 7vh;
+    max-height: max-content;
+    background: var(--main-component-color);
     justify-content: center;
     position: sticky;
     bottom: 0;
     margin-top: auto;
 }
 
-.SurveyFooter > button{
-    min-height: max-content;
-    padding: 1vh;
-    min-width: max-content;
-    width: 30%;
-    border-radius: 1rem;
-    border: 2px solid #3f5596;
-    font-size: 1.5rem;
-    margin: 1rem
+.SurveyFooter > a{
+    width: 60%;
 }
 
-.SurveyFooter > button:hover{
-    color: blue;
-    border: 2px solid blue
+.SurveyFooter > a > button{
+    width: 100%;
 }

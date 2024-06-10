@@ -7,6 +7,7 @@ interface Props {
     taskName: string,
     taskDesc: string,
     taskFunc: ({taskID, score} : {taskID: string, score:number}) => void
+    num: number
 }
 
 const SurveyTask = (props: Props) => {
@@ -34,7 +35,8 @@ const SurveyTask = (props: Props) => {
     }, [props.taskID, onSelectScore, score])
 
     return (
-        <div className="TaskBody">
+        // @ts-ignore
+        <div className="TaskBody" style={{'--n': `${props.num}s`}}>
             <div key={`${props.taskID}_Header`} className="TaskHeader">
                 {`Задача «${props.taskName}»`}
             </div>

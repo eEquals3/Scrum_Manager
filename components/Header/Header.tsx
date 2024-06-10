@@ -17,7 +17,7 @@ const Header = () => {
         router.replace(ROOT_ROUTE)
         setTimeout(()=>{
             signOut(auth)
-        }, 500)
+        }, 800)
         //const result = await signOut(auth)
     }, [router])
 
@@ -57,7 +57,7 @@ const Header = () => {
                                 <span>Профиль</span>
                             </Link>
                             <li onClick={logOut}>
-                                <span>Выйти</span>
+                                <span onClick={logOut}>{"Выйти"}</span>
                             </li>
                         </>
                     ) : null

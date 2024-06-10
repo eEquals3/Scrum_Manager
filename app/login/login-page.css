@@ -1,4 +1,5 @@
 div {
+    padding-top: 1rem;
     height: max-content;
     display:flex;
     flex-wrap: wrap;
@@ -7,27 +8,29 @@ div {
     align-content: center;
 }
 
+@keyframes slideInFromDown {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 div > div{
-    background: #adb7c0;
+    animation: 1s ease-in-out 0s 1 slideInFromDown;
     margin-top: 10rem;
     min-height: min-content;
     height: max-content;
     width: min-content;
     max-width: 90%;
     min-width: 50%;
-    border: solid transparent;
     border-radius: 1rem;
     position: relative;
-}
-
-div > div:before{
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: -1;
-    margin: -8px;
-    border-radius: 1rem;
-    background: linear-gradient(to bottom right, #04afa9, #0a2594);
+    border: 2px solid var(--main-border-color);
+    box-shadow: 3px 2px 3px var(--main-shadow-color);
 }
 
 div > div > span{
@@ -36,6 +39,7 @@ div > div > span{
     justify-content: center;
     width: 100%;
     font-size: 3rem;
+    color: var(--main-text-color)
 }
 
 div > div > form{
@@ -49,10 +53,11 @@ div > div > form{
 }
 div > div > form > b{
     width: 80%;
+    color: var(--secondary-text-color)
 }
 
 div > div > form > span{
-    margin-top: 5rem;
+    margin-top: 2rem;
     font-size: 2rem;
 }
 
@@ -61,15 +66,45 @@ div > div > form > div{
 }
 
 div > div > form > a {
+    padding-top: 1rem;
     width: 80%;
     display: flex;
     justify-content: center;
     font-size: 2rem;
     text-decoration: none;
-    color: white;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+
+div > div > form > a > button{
+    width: 100%;
 }
 
 div > div > form > a:hover {
-    color: blue;
+    color: var(--main-hover-color);
+}
+
+div > div > form > a >span {
+    display: flex;
+    height: 3rem;
+    color: var(--secondary-text-color);
+    position: relative;
+    justify-content: center;
+}
+
+div > div > form > a >span:after{
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    content: '';
+    border-bottom: 1px solid var(--main-border-color);
+    box-shadow: 3px 3px 5px var(--main-shadow-color);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+div > div > form > a >span:hover{
+    color: var(--main-hover-color)
+}
+
+div > div > form > a >span:hover:after{
+    width: 100%;
 }

@@ -13,6 +13,7 @@ import {AuthContext} from "../../provider/AuthProvider";
 import {updateDoc} from "@firebase/firestore";
 
 const Tasks = () => {
+
     const [currentTaskID, setCurrentTaskID] = useState<string>("")
     const [taskState, setTaskState] = useState<string>("display")
 
@@ -65,6 +66,8 @@ const Tasks = () => {
     }, [])
 
     const onAddTaskClick = useCallback(async () => {
+        resetField("name")
+        resetField("description")
         const taskid = crypto.randomUUID()
         try {
             await setDoc(doc(db, "users", userInfo?.uid, "tasks", taskid), {
@@ -124,7 +127,7 @@ const Tasks = () => {
                     <span>
                         <span>
                             {tasks.map(renderTask)}
-                            <button className="TaskButton" onClick={onAddTaskClick}> + </button>
+                            <button className="TaskButton" style={{padding: "1rem", cursor: "pointer"}} onClick={onAddTaskClick}> + </button>
                         </span>
                     </span>
                     <div>

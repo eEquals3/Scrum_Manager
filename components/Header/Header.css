@@ -1,11 +1,10 @@
 header {
-    position: sticky;
     display: flex;
     height: 5%;
-    background: rgba(57, 141, 224, 0.6);
-    padding: 0 2rem 0 5rem;
-    color: white;
-    font-size: 1.5rem;
+    background: var(--main-component-color);
+    padding: 0 2rem 0 3rem;
+    color: var(--main-hover-text-color);
+    font-size: 2rem;
 }
 
 /*header:after{
@@ -24,13 +23,53 @@ header > nav{
 }
 
 header > nav > li {
-    color: white;
     list-style-type: none;
+    position: relative;
+    z-index: 2;
 }
 
 header > nav > li:hover {
-    color: blue;
     cursor: pointer;
+}
+
+header > nav > li:after{
+    top: -7%;
+    left: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > li:before{
+    top: 7%;
+    right: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > li:hover:after{
+    border-left: 1px solid var(--nav-border-color);
+    border-bottom: 1px solid var(--nav-border-color);
+    transform: translate(-15%, 15%);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+header > nav > li:hover:before{
+    border-right: 1px solid var(--nav-border-color);
+    border-top: 1px solid var(--nav-border-color);
+    transform: translate(15%, -15%);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 header > nav > ul {
@@ -48,23 +87,104 @@ header > nav > ul > Image {
 }
 
 header > nav > ul > a {
-    color:white;
+    display: flex;
     text-decoration: none;
-}
-
-header > nav > ul > a:hover {
-    color: blue;
+    align-items: center;
+    height: max-content;
 }
 
 header > nav > ul > li > span:hover{
     cursor: pointer;
-    color: blue;
 }
 
 header > nav > ul > a > span{
+    color: var(--main-hover-text-color);
     position: relative;
+    height: max-content;
+}
+
+header > nav > ul > a > span:after{
+    top: -7%;
+    left: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > ul > a > span:before{
+    top: 7%;
+    right: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > ul > a > span:hover:after{
+    border-left: 1px solid var(--nav-border-color);
+    border-bottom: 1px solid var(--nav-border-color);
+    transform: translate(-15%, 15%);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+header > nav > ul > a > span:hover:before{
+    border-right: 1px solid var(--nav-border-color);
+    border-top: 1px solid var(--nav-border-color);
+    transform: translate(15%, -15%);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 header > nav > ul > li > span{
+    color: var(--main-hover-text-color);
     position: relative;
+    height: max-content;
+}
+
+header > nav > ul > li > span:after{
+    top: -7%;
+    left: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-left: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > ul > li > span:before{
+    top: 7%;
+    right: 0;
+    width: 130%;
+    height: 130%;
+    content: '';
+    position: absolute;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    transition: all .3s;
+    z-index: 1;
+}
+
+header > nav > ul > li > span:hover:after{
+    border-left: 1px solid var(--nav-border-color);
+    border-bottom: 1px solid var(--nav-border-color);
+    transform: translate(-15%, 15%);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+header > nav > ul > li > span:hover:before{
+    border-right: 1px solid var(--nav-border-color);
+    border-top: 1px solid var(--nav-border-color);
+    transform: translate(15%, -15%);
+    background: rgba(255, 255, 255, 0.1);
 }

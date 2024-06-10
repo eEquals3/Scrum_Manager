@@ -22,7 +22,6 @@ export const registerSchema = Yup.object({
 
 export const profileSchema = Yup.object({
     user_name: Yup.string().nullable(),
-    icon_url: Yup.string().nullable(),
 })
 
 export const passwordSchema = Yup.object({

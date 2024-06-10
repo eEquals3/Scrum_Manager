@@ -1,10 +1,13 @@
 import React from "react";
+import "./HelloPage.css"
 
 export default function Home() {
 
     return (
-        <div>
-            <p> about </p>
+        <div className="HelloPage">
+            <div className="Header">
+                {"Об этом сайте"}
+            </div>
         </div>
     )
 }

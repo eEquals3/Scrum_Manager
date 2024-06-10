@@ -31,14 +31,13 @@ interface TaskScore {
 
 interface SurveyType{
     completed: boolean,
-    selectedTasks: DocumentData[],
-    userScore: DocumentData[],
-    users: string[]
+    selectedTasks: {id: string, name: string, description: string}[],
+    userScore: {userId: string, name: string, userScore:{id: string, score: number}[]}[]
 }
 
 const Page = () => {
     const userID = usePathname().substring(9, 37);
-    const [survey, setSurvey] = useState<SurveyType | DocumentData>({completed: false, users: [], userScore: [], selectedTasks: []})
+    const [survey, setSurvey] = useState<SurveyType | DocumentData>({completed: false, userScore: [], selectedTasks: []})
     const [authorName, setAuthorName] = useState<string>("userName")
     const [commandMemberName, setCommandMemberName] = useState<string>("")
     const [tasks, setTasks] = useState<DocumentData[]>([])
@@ -54,6 +53,14 @@ const Page = () => {
     const surveyQuery = useMemo(() => {
         return query(collection(db, "users", userID, "survey"), limit(1));
     }, [userID])
+
+    useEffect(()=>{
+        getDoc(doc(db, "users", userID)).then(r=>{
+            // @ts-ignore
+            setAuthorName(r?.data().name? r.data().name : "?")
+        })
+        console.log('запрос имени прошел');
+    },[])
 
     useEffect(() => {
         console.log('commandMemberName', JSON.stringify(commandMemberName, null, 2));
@@ -73,7 +80,7 @@ const Page = () => {
             setSurvey(updatedSurvey)
             setModalEndSurveyVisibility(updatedSurvey.completed);
             setSurveyClosed(updatedSurvey.completed);
-            setTasks(updatedSurvey.selectedTasks)
+            //setTasks(updatedSurvey.selectedTasks)
             //console.log('tasks', JSON.stringify(tasks, null, 2));
             if (tasks.length === 0){ setTasks(updatedSurvey.selectedTasks) }
         }))
@@ -107,25 +114,24 @@ const Page = () => {
         setCommandMemberName(values.name)
     }, [])
 
-    const createSurveyTask = useCallback((task: DocumentData) => {
+    const createSurveyTask = useCallback((task: DocumentData, i: number) => {
         return <SurveyTask key={task.id} taskName={task.name} taskDesc={task.description} taskID={task.id}
-                           taskFunc={setTaskScore}/>
+                           taskFunc={setTaskScore} num={i}/>
     }, [])
 
     const onSaveResultClick = useCallback(async () => {
         if (commandMemberName != "") {
-            const mappedTasks = tasks.map((task) => (
-                {id: task.id, score: task.score || 1}
-            ))
+
+            const userAnswers = {userId: crypto.randomUUID().toString(), name: commandMemberName, userScore: tasks.map((task) => (
+                    {id: task.id, score: task.score || 1}
+                )) }
+
             const mappedTaskObj = survey.userScore
-            mappedTaskObj.push({mappedTasks})
+            mappedTaskObj.push({userAnswers})
+
             console.log(commandMemberName)
             console.log(mappedTaskObj)
-            const users = survey.users
-            users.push(commandMemberName)
-            console.log(users)
             await updateDoc(doc(db, "users", userID, "survey", "survey"), {
-                users: users,
                 userScore: mappedTaskObj
             } as DocumentData)
             setModalOnCompleteSurveyVisibility(true)
@@ -133,7 +139,7 @@ const Page = () => {
             alert("Пожалуйста, укажите ваше имя")
         }
         commandMemberName ? setConfirmUnactive(true) : null
-    }, [commandMemberName, survey.userScore, survey.users, tasks, userID])
+    }, [commandMemberName, survey.userScore, tasks, userID])
 
     return (
         <div className="SurveysBody">
@@ -146,15 +152,13 @@ const Page = () => {
                                         placeholder=" Ведите свое имя... " name="name" label=""/>
                             <SubmitButton label={"Подтвердить"}/>
                         </form>
-                        {`Пожалуйста, оцените сложность каждой задачи по шкале от 1 до 10`}
+                        {(commandMemberName? `${commandMemberName}, пожалуйста` : `Пожалуйста`) + `, оцените сложность каждой задачи по шкале от 1 до 10`}
                     </header>
                     <div className="SurveyTaskPart">
                         {tasks.map(createSurveyTask)}
                     </div>
                     <footer className="SurveyFooter">
-                        <button onClick={onSaveResultClick} disabled={confirmUnactive}>
-                            {"Сохранить"}
-                        </button>
+                        <SubmitButton label={"Сохранить"} onClickFunk={onSaveResultClick} disabled={confirmUnactive}/>
                     </footer>
                 </>
             ) : null}

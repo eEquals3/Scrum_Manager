@@ -1,8 +1,35 @@
-div{
+.HomePage{
     display: flex;
     flex-direction: row;
     height: 95%;
     width: 100%;
     padding: 0;
+    align-items: flex-start;
+    color: var(--secondary-text-color);
+    justify-content: center;
+}
+
+.HomeBody{
+    width: 95%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.HomeBody:first-child{
+    margin: 6rem 0 0 0;
+    gap: 3rem;
+}
+
+.Arrow{
+    letter-spacing: 0.1rem;
+    font-size: 2rem;
+    margin-top: 0.2rem;
+    display: flex;
+    height: 5%;
+    align-items: flex-start;
+    justify-content: center;
 }
 

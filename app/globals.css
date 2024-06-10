@@ -2,12 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+    --main-bg-color: #F3F7EC;
+    --main-component-color: #006989;
+    --main-component-text-color: #424242;
+    --main-shadow-color: #005C78;
+    --main-border-color: #006989;
+
+    --main-text-color: #424242;
+    --secondary-text-color: #424242;
+
+    --main-hover-color: #102C57;
+    --main-hover-text-color: #FEFAF6;
+    --main-border-hover-color: #102C57;
+
+    --scrollbar-color: #102C57;
+
+    --nav-border-color: black
+}
+
 Body{
     height: 100vh;
     margin:0;
-    background: linear-gradient(to bottom right, #a1a1b0, #b8d2d2);
-    font-family: sans-serif;
-    color: #363636;
+    background: var(--main-bg-color);
+    font-family: "Google Sans", sans-serif;
+    color: var(--main-text-color);
     padding: 0;
     overflow-x: hidden;
     overflow-y: scroll;

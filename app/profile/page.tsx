@@ -12,7 +12,6 @@ import {updatePassword, updateProfile} from "@firebase/auth";
 import {doc, updateDoc} from "@firebase/firestore";
 import {db} from "../services/Firebase";
 import {DocumentData} from "firebase/firestore";
-import Modal from "../../components/Modal/Modal";
 
 const Profile = () => {
     const {user}: any = AuthContext();
@@ -45,12 +44,10 @@ const Profile = () => {
         if (values) {
             updateProfile(userInfo, {
                 displayName: values.user_name,
-                photoURL: values.icon_url
             }).then(async (r) => {
                 try {
                     await updateDoc(doc(db, "users", userInfo.uid), {
                         name: values.user_name,
-                        iconURL: values.icon_url
                     } as DocumentData)
                 } catch (errors) {
                     console.log('errors', JSON.stringify(errors, null, 2));
@@ -79,13 +76,14 @@ const Profile = () => {
     return (
         <div>
             <div>
-                <span>{`Добро пожаловать ${userInfo?.displayName}`}</span>
+                <span>{`Добро пожаловать, ${userInfo?.displayName}`}</span>
                 <span>
                     <span>Имя: {userInfo?.displayName}</span>
                     <span>Email: {userInfo?.email}</span>
-                    <span>URL фото: {userInfo?.photoURL}</span>
-                    <button onClick={onPressChangeProfile}> редактировать профиль </button>
-                    <button onClick={onPressChangePassword}> изменить пароль </button>
+                    <div className="ButtonContainer">
+                        <SubmitButton label={"редактировать профиль"} onClickFunk={onPressChangeProfile}/>
+                    <SubmitButton label={"редактировать имя"} onClickFunk={onPressChangePassword}/>
+                    </div>
                 </span>
 
                 {loginChange === "profile" ? (
@@ -93,9 +91,7 @@ const Profile = () => {
                         <form onSubmit={handleProfileSubmit(onSubmitProfile)}>
                             <InputField register={registerProfile} error={profileErrors.user_name} type="text"
                                         placeholder=" Введите ваше имя..." name="user_name" label="Имя"/>
-                            <InputField register={registerProfile} error={profileErrors.icon_url} type="text"
-                                        placeholder=" Ссылка на фото..." name="icon_url" label="URL фото"/>
-                            <SubmitButton label="Обновить профиль"/>
+                            <SubmitButton label="Подтвердить"/>
                         </form>
                     </>
                 ) : null

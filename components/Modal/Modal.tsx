@@ -1,10 +1,10 @@
 'use client'
-import {memo, useCallback} from "react";
+import {JSX, memo, useCallback} from "react";
 import "./Modal.css"
 
 interface Props {
     modalHeader: string;
-    modalText: string;
+    modalText: string | any;
     modalButtonText?: string;
     closeModalFunc: (b:boolean)=> void
 }
@@ -16,7 +16,7 @@ const Modal = (Prop: Props) => {
     }, [Prop])
 
     return (
-        <div className="Background">
+        <div className="Background" onClick={modalButtonClick}>
             <div className="ModalBody">
                 <div className="ModalHeader">{Prop.modalHeader}</div>
                 <div className="ModalText">{Prop.modalText}</div>

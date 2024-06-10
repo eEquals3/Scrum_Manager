@@ -1,0 +1,109 @@
+.ResultGridContainer{
+    display: flex;
+    flex-direction: column;
+    margin: unset;
+    padding: 1rem;
+    overflow: scroll;
+}
+
+.ResultGridContainer::-webkit-scrollbar{
+    width: 15px;
+    background: transparent;
+}
+
+.ResultGridContainer::-webkit-scrollbar-thumb{
+    border-radius: 0.5rem;
+    background: var(--scrollbar-color);
+}
+
+.ResultGridContainer::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.UserCount{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.UserCount:after{
+    position: absolute;
+    content: "";
+    z-index: 99;
+    width: 80%;
+    bottom: 0;
+    border-bottom: 1px solid var(--main-border-color);
+    box-shadow: 3px 3px 5px var(--main-shadow-color);
+}
+
+.GridTaskHeader{
+    font-size: 2rem;
+    padding-top: 2rem;
+    letter-spacing: .5rem;
+    position: relative;
+}
+
+.GridUserHeader{
+    font-size: 2rem;
+    padding-top: 2rem;
+    width: 2rem;
+    height: max-content;
+    left: 10%;
+}
+
+.Grid{
+    display: flex;
+    flex-direction: row;
+}
+
+.GridColumn{
+     display: flex;
+     flex-direction: column;
+ }
+
+.gridRow{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--main-border-color);
+}
+
+.gridRow .GridCell{
+    background: rgba(0, 0, 0, 0.3);
+}
+
+
+.GridCell{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid var(--main-border-color);
+}
+
+.GridCell:hover:after{
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.RowHeaderCell{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    cursor: context-menu;
+    border-right: 1px solid var(--main-border-color);
+}
+
+.Hollow{
+    border-right: 1px solid var(--main-border-color);
+}
+
+.gridRow:has(.RowHeaderCell:hover) {
+    color: var(--main-hover-color);
+    background: rgba(0, 0, 0, 0.3);
+}

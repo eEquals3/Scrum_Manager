@@ -11,13 +11,13 @@ interface Props {
     userUID?: any,
     taskClickFunc: (task: DocumentData) => void;
     taskClickSetView: (b: boolean) => void;
+    num: number
 }
-
 
 
 const Sprint = ((props: Props) => {
 
-    const checkColor = (score:number) => {
+    const checkColor = (score: number) => {
         switch (true) {
             case (score <= 2):
                 return "#22ff00";
@@ -80,18 +80,25 @@ const Sprint = ((props: Props) => {
                 <div key={`TaskDate ${task.id}`}>
                     {`дата выполнения: ${task.completedDate}`}
                 </div> : null}
-            <div className="Score" style={{ background: checkColor(task.score)}}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
+            <div className="Score" style={task.score ? {
+                background: checkColor(task.score),
+                color: "var(--main-text-color)"
+            } : undefined}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
         </button>
     }, [onTaskClick])
 
     const renderFailedTask = useCallback((task: DocumentData) => {
         return <button className="FailedTask" key={"FailedTask" + task.id} disabled={true}> {task.name} {task.score ?
-            <div className="Score" style={{ background: checkColor(task.score)}}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div> : null}</button>
+            <div className="Score" style={task.score ? {
+                background: checkColor(task.score),
+                color: "var(--main-text-color)"
+            } : undefined}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div> : null}
+        </button>
     }, [])
 
-    const sprintScore = useMemo(()=>{
+    const sprintScore = useMemo(() => {
         return currentTasks.reduce((acc, task) => {
-            acc += task.score? task.score : 0
+            acc += task.score ? task.score : 0
             return acc
         }, 0)
     }, [currentTasks])
@@ -140,21 +147,27 @@ const Sprint = ((props: Props) => {
     }, [currentTasks?.length, uncompletedTasks?.length])
 
     return (
-        <div className="Sprint" key={props.sprint.id}>
-            <h1> Спринт №{header} </h1>
-            <div key={"DateStart" + props.sprint.id}> Дата создания: {startDate}</div>
-            <div key={"DateEnd" + props.sprint.id}> Дата окончания: {endDate}</div>
+        // @ts-ignore
+        <div className="Sprint" key={props.sprint.id} style={{'--n': `${props.num}s`}}>
+            <div className="SprintHeader">
+                <h1> Спринт №{header} </h1>
+                <div key={"DateStart" + props.sprint.id}> Дата создания: {startDate}</div>
+                <div key={"DateEnd" + props.sprint.id}> Дата окончания: {endDate}</div>
+            </div>
             <span>
                 <div className="TaskScroll">
                     {currentTasks.map(renderTask)}
                     {uncompletedTasks?.map(renderFailedTask)}
                 </div>
             </span>
-            {sprintState === "during" ? (<button onClick={endingSprint}>Закончить спринт</button>) : null}
-            {sprintState === "completed" ? (<div key={"SprintEnd" + props.sprint.id}>Спринт завершен</div>) : null}
-            {sprintState === "completed" ? (
-                <div key={"TaskCompleted" + props.sprint.id}>{"задач выполнено: " + tasksCountString}</div>) : null}
-            <div className="Score"> {`Сложность спринта: ${sprintScore}`} </div>
+            <div className="SprintFooter">
+                {sprintState === "during" ? (<button onClick={endingSprint}>Закончить спринт</button>) : null}
+                {sprintState === "completed" ? (<div key={"SprintEnd" + props.sprint.id}>Спринт завершен</div>) : null}
+                {sprintState === "completed" ? (
+                    <div key={"TaskCompleted" + props.sprint.id}>{"задач выполнено: " + tasksCountString}</div>) : null}
+                <div> {`Сложность спринта: ${sprintScore}`} </div>
+            </div>
+
         </div>
     )
 })

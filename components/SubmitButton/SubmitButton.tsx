@@ -3,12 +3,13 @@ import "./SubmitButton.css"
 interface Props{
     label: string;
     onClickFunk?: () => void | any;
+    disabled?: boolean
 }
 
-const SubmitButton = ({label, onClickFunk}:Props) => {
+const SubmitButton = ({label, onClickFunk, disabled}:Props) => {
     return (
         <a>
-            <button onClick={onClickFunk}>
+            <button onClick={onClickFunk} disabled={disabled}>
                 {label}
             </button>
         </a>

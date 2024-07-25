@@ -133,7 +133,7 @@ const Commands = () => {
                             <div className="Hollow"/>
                             <div className="Header">
                                 <div
-                                    className="CommandName">{currentCommand ? `${currentCommand?.name}` : "Команды"}</div>
+                                    className="CommandName">{`${currentCommand?.name}`}</div>
                                 <PenIcon onClickFunk={setCommandState} onClickState="redact"/>
                             </div>
                         </> : null}
@@ -154,7 +154,11 @@ const Commands = () => {
                             {!currentCommand ? (
                                 <>
                                     <div className="Hollow"/>
-                                    <div className="Hollow"/>
+                                    <div className="Header">
+                                        <div
+                                            className="CommandName">{"Команды"}
+                                        </div>
+                                    </div>
                                 </>) : null}
                             <div className="ButtonContainer">
                                 <a>

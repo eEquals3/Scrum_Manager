@@ -20,7 +20,7 @@ interface UserLogin {
 
 const Register = () => {
 
-    const {handleSubmit, register, formState: {errors}, reset} = useForm({
+    const {handleSubmit, register, formState: {errors}, reset,  getValues} = useForm({
         resolver: yupResolver(registerSchema),
     })
 
@@ -30,18 +30,16 @@ const Register = () => {
         createUserWithEmailAndPassword(auth, userData.email, userData.password).then(async (response) => {
             alert("Регистрация прошла успешно");
             const userid = response.user.uid;
-            const taskid = crypto.randomUUID()
-            setTimeout(() => {
-                router.push(LOGIN_ROUTE);
-            }, 100);
+            const values = getValues()
             reset();
             try {
                 await setDoc(doc(db, "users", userid), {
-                    email: userData.email,
+                    email: values["email"],
                     name: "",
                     iconURL: "",
                     lastSprint: 1,
                 } as DocumentData);
+                router.push(LOGIN_ROUTE);
             } catch (errors) {
                 console.log('errors adding document', JSON.stringify(errors, null, 2));
             }
@@ -49,7 +47,7 @@ const Register = () => {
             console.log("catch ", errors)
             alert("что-то пошло не так, попробуйте снова");
         });
-    }, [reset, router])
+    }, [getValues, reset, router])
 
     return (
         <div>

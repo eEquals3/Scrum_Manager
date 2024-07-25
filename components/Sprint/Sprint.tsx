@@ -44,7 +44,7 @@ const Sprint = ((props: Props) => {
     const [sprintState, setSprintState] = useState<string>(props.sprint.sprintState)
     const header = props.sprint.number
     const startDate = dayjs(props.sprint.creationDate.toDate()).format("DD-MM-YYYY")
-    const endDate = dayjs(props.sprint.creationDate.toDate()).add(14, "days").format("DD-MM-YYYY")
+    const endDate = ( !props.sprint.completedDate ? dayjs(props.sprint.creationDate.toDate()).add(14, "days").format("DD-MM-YYYY") : props.sprint.completedDate)
     const taskQuery = query(collection(db, "users", props.userUID, "tasks"), where("sprint", "==", props.sprint.id))
     const [uncompletedTasks, setUncompletedTasks] = useState<DocumentData[]>(props.sprint.uncomletedTasks || [])
     const [currentTasks, setCurrentTasks] = useState<DocumentData[]>([])
@@ -83,7 +83,7 @@ const Sprint = ((props: Props) => {
             <div className="Score" style={task.score ? {
                 background: checkColor(task.score),
                 color: "var(--main-text-color)"
-            } : undefined}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
+            } : undefined}> {task.score ? "Сложность: " + task.score.toFixed(1) : "Сложность неизвестна"} </div>
         </button>
     }, [onTaskClick])
 
@@ -92,7 +92,7 @@ const Sprint = ((props: Props) => {
             <div className="Score" style={task.score ? {
                 background: checkColor(task.score),
                 color: "var(--main-text-color)"
-            } : undefined}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div> : null}
+            } : undefined}> {task.score ? "Сложность: " + task.score.toFixed(1) : "Сложность неизвестна"} </div> : null}
         </button>
     }, [])
 

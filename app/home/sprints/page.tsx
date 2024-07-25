@@ -242,7 +242,7 @@ const Sprints = () => {
         const localSurveyResults = surveyResults.reduce((acc, el) => {
             console.log('el', JSON.stringify(el, null, 2));
             for (const item of el.userAnswers.userScore) {
-                acc[item.id] = acc[item.id] ? acc[item.id] + item.score : item.score
+                acc[item.id] = acc[item.id] ? acc[item.id] + Number(item.score.toFixed(1)) : Number(item.score.toFixed(1))
             }
             return acc
         }, {})
@@ -293,7 +293,7 @@ const Sprints = () => {
                             }}> +
                             </button>
                             {sprints?.map(renderSprint)}
-                            <button onClick={updateSprintsLimit}> {" > "} </button>
+                            {sprints?.length === 5?<button onClick={updateSprintsLimit}> {" > "} </button>:null}
                         </div> : null}
                         {addSprintState ? (
                             <span>

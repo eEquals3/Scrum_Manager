@@ -40,27 +40,6 @@ const Tasks = () => {
         console.log('tasks', JSON.stringify(tasks, null, 2));
     }, [tasks]);
 
-    /*useEffect(()=>{
-        console.log('taskState', JSON.stringify(taskState, null, 2));
-        console.log('currentTaskID', JSON.stringify(currentTaskID, null, 2));
-        console.log('currentTask', JSON.stringify(currentTask, null, 2));
-    }, [currentTaskID, taskState])
-     */
-
-    /*
-    useEffect(() => {
-        let taskMassive = []
-        const Receive = async () => {
-            const snapshot = await getDocs(collection(db, "users", userInfo.uid, "tasks"));
-            snapshot.forEach((doc) => {
-                taskMassive.push(doc.data())
-            })
-            setTasks(taskMassive);
-        }
-        Receive().catch((errors)=>{console.log('errors', JSON.stringify(errors, null, 2));})
-    }, [userInfo.uid])
-     */
-
     const renderTask = useCallback((task: DocumentData) => {
         return <TaskButton key={task.id} taskName={task.name} taskId={task.id} onTaskClickFunc={setCurrentTaskID} onTaskDisplayFunc={setTaskState} score={task.score}/>
     }, [])
@@ -83,7 +62,7 @@ const Tasks = () => {
         } catch (errors) {
             console.log('errors', JSON.stringify(errors, null, 2));
         }
-    }, [userInfo?.uid])
+    }, [resetField, userInfo?.uid])
 
     const onRedactClick = useCallback(() => {
         resetField("name")

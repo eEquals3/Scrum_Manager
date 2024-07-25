@@ -146,7 +146,7 @@ const Page = () => {
             {!surveyClosed ? (
                 <>
                     <header className="SurveyHeader">
-                        {`Автор опроса - ${authorName}`}
+                        {(authorName!="userName"?`Автор опроса - ${authorName}`: "Автор не указал свое имя")}
                         <form className="NameInputContainer" onSubmit={handleSubmit(onSubmitName)}>
                             <InputField register={register} error={errors.name} type="name"
                                         placeholder=" Ведите свое имя... " name="name" label=""/>

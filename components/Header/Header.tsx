@@ -4,22 +4,23 @@ import "../../app/constants/routes"
 import Link from "next/link";
 import {HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, ROOT_ROUTE} from "../../app/constants/routes";
 import {AuthContext} from "../../app/provider/AuthProvider";
-import {signOut} from "@firebase/auth";
-import {auth} from "../../app/services/Firebase";
 import {useRouter} from "next/navigation";
 import {memo, useCallback} from "react";
+import {getAuth} from "firebase/auth";
 
 const Header = () => {
     const {user}: any = AuthContext();
     const router = useRouter();
 
+    const auth = getAuth();
+
     const logOut = useCallback(async () => {
-        router.replace(ROOT_ROUTE)
-        setTimeout(()=>{
-            signOut(auth)
-        }, 800)
-        //const result = await signOut(auth)
-    }, [router])
+        await router.replace(ROOT_ROUTE)
+        setTimeout(() => {
+            auth.signOut()
+        },  500)
+        await auth.signOut()
+    }, [auth, router])
 
     const onLogoClick = useCallback(() => {
         if (user?.isLogin) {

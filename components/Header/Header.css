@@ -1,6 +1,6 @@
 header {
     display: flex;
-    height: 5%;
+    height: 5vh;
     background: var(--main-component-color);
     padding: 0 2rem 0 3rem;
     color: var(--main-hover-text-color);
@@ -26,6 +26,11 @@ header > nav > li {
     list-style-type: none;
     position: relative;
     z-index: 2;
+
+}
+
+header > nav > li > div{
+    padding: unset;
 }
 
 header > nav > li:hover {

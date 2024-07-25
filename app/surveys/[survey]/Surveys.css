@@ -12,6 +12,7 @@
 
 .SurveyHeader {
     width: 100%;
+    height: fit-content;
     display: flex;
     font-size: 2rem;
     flex-direction: column;

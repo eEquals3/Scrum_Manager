@@ -12,10 +12,14 @@ import {updatePassword, updateProfile} from "@firebase/auth";
 import {doc, updateDoc} from "@firebase/firestore";
 import {db} from "../services/Firebase";
 import {DocumentData} from "firebase/firestore";
+import {getAuth} from "firebase/auth";
 
 const Profile = () => {
     const {user}: any = AuthContext();
     const userInfo = user.user;
+
+    const auth = getAuth();
+    const userNow = auth.currentUser;
 
     const {handleSubmit: handleProfileSubmit, register: registerProfile, formState: {errors: profileErrors}} = useForm({
         resolver: yupResolver(profileSchema),
@@ -63,14 +67,17 @@ const Profile = () => {
     }, [userInfo])
 
     const onSubmitPassword = useCallback((values: { password: string }) => {
-        updatePassword(userInfo, values.password).then((r) => {
-            console.log("password successfully changed", r);
-            setLoginChange("none");
-            alert("Пароль успешно иземенен")
-        }).catch((e) => {
-            console.log("errors", e?.message)
-        })
-    }, [userInfo])
+        if (userNow) {
+            updatePassword(userNow, values.password).then((r) => {
+                console.log("password successfully changed", r);
+                setLoginChange("none");
+                alert("Пароль успешно иземенен")
+            }).catch((e) => {
+                console.log("errors", e?.message)
+                alert("Возможно вы слишком давно авторизовывались, необходимо повторно войти в аккаунт")
+            })
+        }
+    }, [userNow])
 
 
     return (
@@ -81,8 +88,8 @@ const Profile = () => {
                     <span>Имя: {userInfo?.displayName}</span>
                     <span>Email: {userInfo?.email}</span>
                     <div className="ButtonContainer">
-                        <SubmitButton label={"редактировать профиль"} onClickFunk={onPressChangeProfile}/>
-                    <SubmitButton label={"редактировать имя"} onClickFunk={onPressChangePassword}/>
+                        <SubmitButton label={"редактировать имя"} onClickFunk={onPressChangeProfile}/>
+                        <SubmitButton label={"редактировать пароль"} onClickFunk={onPressChangePassword}/>
                     </div>
                 </span>
 

@@ -48,7 +48,7 @@ const Login = () => {
                     <>
                         <span>Нет аккаунта? </span>
                         <Link href={REGISTER_ROUTE}>
-                            <span>Зарегестрироваться</span>
+                            <span>{"Зарегистрироваться"}</span>
                         </Link>
                     </>
                 </form>

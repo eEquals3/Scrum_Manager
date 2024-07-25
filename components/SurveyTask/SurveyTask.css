@@ -39,6 +39,7 @@
     white-space: normal;
     margin: 0 1rem 1rem 1rem;
     align-items: center;
+    border: none;
 }
 
 .RadioButtonContainer{
@@ -63,6 +64,7 @@
 
 .RadioButton{
     display: flex;
+    height: fit-content;
     align-items: center;
 }
 

@@ -6,7 +6,7 @@ interface Props {
     taskID: string
     taskName: string,
     taskDesc: string,
-    taskFunc: ({taskID, score} : {taskID: string, score:number}) => void
+    taskFunc: ({taskID, score}: { taskID: string, score: number }) => void
     num: number
 }
 
@@ -21,14 +21,14 @@ const SurveyTask = (props: Props) => {
 
     const onSelectScore = useCallback((num: number) => {
         setScore(num)
-        props.taskFunc({taskID:props.taskID, score: num})
+        props.taskFunc({taskID: props.taskID, score: num})
     }, [props])
 
     const createRadioButton = useCallback((num: number) => {
         return (
             <div key={`${props.taskID}_${num}_RadioButton`} className="RadioButton">
                 <input key={`${props.taskID}_${num}`} type="radio" id={`${props.taskID}_${num}`}
-                       onChange={()=>onSelectScore(num)} value={num} name={`${props.taskID}score`}
+                       onChange={() => onSelectScore(num)} value={num} name={`${props.taskID}score`}
                        defaultChecked={num === score}/>
                 <label htmlFor={`${props.taskID}_${num}`}> {num} </label>
             </div>)
@@ -43,11 +43,9 @@ const SurveyTask = (props: Props) => {
             <div key={`${props.taskID}_Desc`} className="TaskDesc">
                 {props.taskDesc ? props.taskDesc : "нет подробного описания"}
             </div>
-            <div>
-                <legend className="RadioButtonContainer">
-                    {scoreList.map(createRadioButton)}
-                </legend>
-            </div>
+            <legend className="RadioButtonContainer">
+                {scoreList.map(createRadioButton)}
+            </legend>
         </div>
     )
 }

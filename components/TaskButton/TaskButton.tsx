@@ -51,7 +51,7 @@ const TaskButton = (task: Props) => {
         <button className="TaskButton" style={(task.grab!= undefined? {cursor: "grabbing"} : {cursor: "pointer"})} key={task.taskId} onClick={onTaskClick}>
             {task.taskName}
             <div className="Score"
-                 style={task.score?{background: checkColor(task.score), color: "var(--main-text-color)"} :undefined}> {task.score ? "Сложность: " + task.score : "Сложность неизвестна"} </div>
+                 style={task.score?{background: checkColor(task.score), color: "var(--main-text-color)"} :undefined}> {task.score ? "Сложность: " + task.score.toFixed(1) : "Сложность неизвестна"} </div>
         </button>
     )
 }

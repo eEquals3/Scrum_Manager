@@ -39,7 +39,7 @@ export function DraggableButton(props: any) {
     return (
         <button className="TaskButton" key={props.id} ref={setNodeRef} style={style} {...listeners} {...attributes}>
             {props.name}
-            <div className="Score" style={(props.score?{background: checkColor(props.score), color: "var(--main-text-color)"} :undefined)}> {props.score ? "Сложность: " + props.score : "Сложность неизвестна"} </div>
+            <div className="Score" style={(props.score?{background: checkColor(props.score), color: "var(--main-text-color)"} :undefined)}> {props.score ? "Сложность: " + props.score.toFixed(1) : "Сложность неизвестна"} </div>
             {props.children}
         </button>
     );

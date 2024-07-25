@@ -34,7 +34,7 @@
     width: max-content;
     height: max-content;
     border: 3px solid var(--main-border-color);
-    background: rgba(243, 247, 236, 0.5);
+    background: rgba(243, 247, 236, 0.9);
     backdrop-filter: blur(8px);
     padding: 1rem;
     border-radius: 1rem;

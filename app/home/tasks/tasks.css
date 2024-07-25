@@ -101,7 +101,7 @@ div > div > span > span > span{
 .TaskButton{
     animation: appear linear;
     animation-timeline: view();
-    animation-range: entry 0% cover 8%;
+    animation-range: entry 0%;
 }
 
 div > div > span > span > span::-webkit-scrollbar{

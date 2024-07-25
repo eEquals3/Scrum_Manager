@@ -20,7 +20,7 @@ div {
 }
 
 div > div{
-    animation: 1s ease-in-out 0s 1 slideInFromDown;
+    /*animation: 1s ease-in-out 0s 1 slideInFromDown;*/
     margin-top: 10rem;
     min-height: min-content;
     height: max-content;
